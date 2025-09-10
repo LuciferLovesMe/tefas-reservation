@@ -9,13 +9,18 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
-            $("#dataTable").DataTable({
+            console.log('test cak');
+            
+            const table = $("#tableData").DataTable({
                 processing: true,
                 serverSide: true,
+                autoWidth: false,
+                responsive: true,
                 ajax: "{{ route('tefa.index') }}",
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                    { data: 'nama_td', name: 'nama' },
+                    { data: 'nama', name: 'nama' },
+                    { data: 'deskripsi', name: 'deskripsi' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });

@@ -4,10 +4,7 @@ import laravel from "laravel-vite-plugin";
 export default defineConfig({
     plugins: [
         laravel({
-            input: [
-                "resources/css/argon-dashboard-tailwind.css",
-                "resources/js/argon-dashboard-tailwind.js",
-            ],
+            input: ["resources/css/app.css", "resources/js/main.js"],
             refresh: true,
         }),
     ],

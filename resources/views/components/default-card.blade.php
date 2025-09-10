@@ -1,9 +1,23 @@
-<div class="w-full px-6 py-6 mx-auto">
-    <div class="flex flex-wrap -mx-3">
-        <div class="flex-none w-full max-w-full px-3">
-            <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                {{ $slot }}
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Layout Default</h3>
+                <p class="text-subtitle text-muted">The default layout </p>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                {{-- <x-breadcrumb-item /> --}}
             </div>
         </div>
     </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Default Layout</h4>
+            </div>
+            <div class="card-body">
+                {{ $slot }}
+            </div>
+        </div>
+    </section>
 </div>

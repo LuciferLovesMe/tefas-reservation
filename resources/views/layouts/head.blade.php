@@ -4,24 +4,27 @@
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="./assets/img/favicon.png" />
     <title>Argon Dashboard 2 Tailwind by Creative Tim</title>
-    <!--     Fonts and icons     -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <!-- Nucleo Icons -->
-    <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
-    <!-- Popper -->
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
 
-    <!-- plugin for charts  -->
-    <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}" async></script>
-    <!-- plugin for scrollbar  -->
-    <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}" async></script>
+    {{-- CSS --}}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/vendors/iconly/bold.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.svg') }}" type="image/x-icon">
+    
+    {{-- JS --}}
+    <script src="{{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     
     {{-- Main Vite --}}
-    @vite(['resources/css/argon-dashboard-tailwind.css', 'resources/js/argon-dashboard-tailwind.js'])
+    @vite(['resources/css/app.css', 'resources/js/main.js'])
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.tailwindcss.js"></script>
+  
 </head>

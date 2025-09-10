@@ -3,23 +3,26 @@
     @include('layouts.head')
     @stack('styles')
     
-  <body
-      class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500"
-    >
-      <div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
+  <body>
+    <div id="id">
 
       @include('layouts.sidebar')
 
-      <main
-          class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl"
-        >
-          @include('layouts.navbar')
-          @include('components.flash-messages')
-          @yield('content')
-        <!-- end cards -->
-      </main>
-
+      @include('components.flash-messages')
+      
+      <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+        @yield('content')
+      </div>
+      
       @stack('scripts')
+      
+    </div>
+
   </body>
 
 </html>

@@ -32,24 +32,6 @@ class TefaController extends Controller
             return datatables()
                 ->of($this->tefaRepository->getAll())
                 ->addIndexColumn()
-                ->addColumn('nama_td', function ($data) {
-                    return '<td class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                          <div class="flex px-2 py-1">
-                            <div class="flex flex-col justify-center">
-                              <h6 class="mb-0 text-sm leading-normal dark:text-white">' . $data->nama . '</h6>
-                            </div>
-                          </div>
-                        </td>';
-                })
-                ->addColumn('deskripsi_td', function ($data) {
-                    return '<td class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                          <div class="flex px-2 py-1">
-                            <div class="flex flex-col justify-center">
-                              <h6 class="mb-0 text-sm leading-normal dark:text-white">' . $data->deskripsi . '</h6>
-                            </div>
-                          </div>
-                        </td>';
-                })
                 ->addColumn('action', function ($data) {
                     $actionButton = new ActionButton(
                         route('tefa.edit', $data->id),
