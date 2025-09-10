@@ -1,0 +1,167 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Requests\TefaRequest;
+use App\Interfaces\TefaInterface;
+use App\View\Components\ActionButton;
+use App\View\Components\FormComponents\Td;
+use Exception;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+
+use function Termwind\render;
+
+class TefaController extends Controller
+{
+    private $tefaRepository;
+
+    public function __construct(TefaInterface $tefaRepository)
+    {
+        $this->tefaRepository = $tefaRepository;
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            return datatables()
+                ->of($this->tefaRepository->getAll())
+                ->addIndexColumn()
+                ->addColumn('nama_td', function ($data) {
+                    return '<td class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                          <div class="flex px-2 py-1">
+                            <div class="flex flex-col justify-center">
+                              <h6 class="mb-0 text-sm leading-normal dark:text-white">' . $data->nama . '</h6>
+                            </div>
+                          </div>
+                        </td>';
+                })
+                ->addColumn('deskripsi_td', function ($data) {
+                    return '<td class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                          <div class="flex px-2 py-1">
+                            <div class="flex flex-col justify-center">
+                              <h6 class="mb-0 text-sm leading-normal dark:text-white">' . $data->deskripsi . '</h6>
+                            </div>
+                          </div>
+                        </td>';
+                })
+                ->addColumn('action', function ($data) {
+                    $actionButton = new ActionButton(
+                        route('tefa.edit', $data->id),
+                        route('tefa.show', $data->id)
+                    );
+                    return $actionButton->render();
+                })
+                ->rawColumns(['nama_td', 'deskripsi_td'])
+                ->make(true);
+        }
+
+        return view('backend.tefa.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('backend.tefa.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(TefaRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $this->tefaRepository->store($request);
+            DB::commit();
+            return redirect()->back()->with('success', 'Data berhasil disimpan.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        try {
+            $data = $this->tefaRepository->getById($id);
+            if (!$data) {
+                return redirect()->back()->with('error', 'Data tidak ditemukan.');
+            }
+            return view('backend.tefa.show', compact('data'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+        } catch (QueryException $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        try {
+            $data = $this->tefaRepository->getById($id);
+            if (!$data) {
+                return redirect()->back()->with('error', 'Data tidak ditemukan.');
+            }
+            return view('backend.tefa.edit', compact('data'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+        } catch (QueryException $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(TefaRequest $request, string $id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->tefaRepository->update($request, $id);
+            DB::commit();
+            return redirect()->back()->with('success', 'Data berhasil diubah.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->tefaRepository->destroy($id);
+            DB::commit();
+            return redirect()->back()->with('success', 'Data berhasil dihapus.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+        }
+    }
+}

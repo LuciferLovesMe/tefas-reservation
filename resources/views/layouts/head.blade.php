@@ -21,4 +21,7 @@
     
     {{-- Main Vite --}}
     @vite(['resources/css/argon-dashboard-tailwind.css', 'resources/js/argon-dashboard-tailwind.js'])
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 </head>
