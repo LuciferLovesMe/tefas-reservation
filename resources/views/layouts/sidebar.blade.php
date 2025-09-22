@@ -15,6 +15,8 @@
                 <li class="sidebar-title">Menu</li>
 
                 <x-sidebar-item icon="bi bi-grid-fill" title="Dashboard" link="{{ route('dashboard') }}" :isActive="request()->routeIs('dashboard')" />
+                    <x-sidebar-item icon="bi bi-grid-fill" title="Teaching Factory" link="{{ route('tefa.index') }}" :isActive="request()->routeIs('tefa')" />
+                <x-sidebar-item icon="bi bi-grid-fill" title="Ruangan" link="{{ route('ruangan.index') }}" :isActive="request()->routeIs('ruangan')" />
             </ul>
         </div>
         <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

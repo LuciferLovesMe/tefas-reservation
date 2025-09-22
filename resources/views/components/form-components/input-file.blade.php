@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-12">
                 <div class="input-group">
-                    <input type="file" onchange="imgPreview('{{ $id }}', 'preview-{{ $class }}')" class="form-control" id="{{ $id }}" name="kegiatan[]" data-id="{{ $id }}" aria-label="Recipient’s username" aria-describedby="button-addon2">
+                    <input type="file" onchange="imgPreview('{{ $id }}', 'preview-{{ $class }}')" class="form-control" id="{{ $id }}" name="{{ $name }}" data-id="{{ $id }}" aria-label="Recipient’s username" aria-describedby="button-addon2">
                     <button class="btn btn-outline-secondary btnHapus{{ $class }}" type="button" id="button-addon2" onClick="deleteForm('#{{ $id }}')">Hapus</button>
                 </div>
             </div>

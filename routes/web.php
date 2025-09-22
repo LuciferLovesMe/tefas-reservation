@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\TefaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\RuanganController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,5 +20,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('/tefa', TefaController::class);
+Route::resource('/ruangan', RuanganController::class);
 
 require __DIR__.'/auth.php';
