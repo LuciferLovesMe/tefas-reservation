@@ -10,6 +10,6 @@ if (!function_exists('storeImage')) {
         $fileType = $file->getClientOriginalExtension();
         $fileName = time() . '-' . $iteration . '.';
         $file->move($uploadPath, $fileName . $fileType);
-        return $uploadPath . '/' . $fileName . $fileType;
+        return $fileName . $fileType;
     }
 }

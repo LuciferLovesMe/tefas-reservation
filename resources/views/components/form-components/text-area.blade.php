@@ -1,3 +1,10 @@
-<div>
-    <!-- When there is no desire, all things are at peace. - Laozi -->
+@props([
+    'name' => '', 
+    'id' => '',
+    'value' => ''
+])
+
+<div class="mb-3">
+    <label for="{{ $id }}" class="form-label">{{ ucwords($name) }}</label>
+    <textarea name="{{ $name }}" id="{{ $id }}" cols="30" rows="10" class="form-control">{{ $value }}</textarea>
 </div>

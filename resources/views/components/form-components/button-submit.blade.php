@@ -1,3 +1,3 @@
-<div>
-    <!-- Life is available only in the present moment. - Thich Nhat Hanh -->
-</div>
+<button type="submit" class="btn btn-primary">
+    Submit
+</button>

@@ -27,17 +27,17 @@ class TefaRepository implements TefaInterface
     public function getById($id)
     {
         return $this->tefa
-            ->where($id)
-            ->with(['fasilitiasTefa', 'produkTefa', 'kegiatanTefa'])
+            ->where('id', $id)
+            ->with(['fasilitasTefa', 'produkTefa', 'kegiatanTefa'])
             ->first();
     }
 
     public function store($request)
     {
-        $this->tefa->create([
-            'nama' => $request->nama,
-            'deskripsi' => $request->deskripsi,
-        ]);
+        $tefa = new Tefa();
+        $tefa->nama = $request->nama;
+        $tefa->deskripsi = $request->deskripsi;
+        $tefa->save();
         
         if ($request->fasilitas != null || $request->fasilitas != []) {
             foreach ($request->fasilitas as $key => $item) {
@@ -45,9 +45,9 @@ class TefaRepository implements TefaInterface
                     continue;
                 }
                 $this->detailTefa->create([
-                    'tefa_id' => $this->tefa->id,
+                    'tefa_id' => $tefa->id,
                     'type' => 'fasilitas',
-                    'detail' => storeImage($item, 'uploads/tefa/fasilitas/' . $this->tefa->id, $key + 1),
+                    'detail' => storeImage($item, '/uploads/tefa/fasilitas/' . $tefa->id, $key + 1),
                 ]);
             }
         }
@@ -58,9 +58,9 @@ class TefaRepository implements TefaInterface
                     continue;
                 }
                 $this->detailTefa->create([
-                    'tefa_id' => $this->tefa->id,
+                    'tefa_id' => $tefa->id,
                     'type' => 'produk',
-                    'detail' => storeImage($item, 'uploads/tefa/produk/' . $this->tefa->id, $key + 1),
+                    'detail' => storeImage($item, '/uploads/tefa/produk/' . $tefa->id, $key + 1),
                 ]);
             }
         }
@@ -71,9 +71,9 @@ class TefaRepository implements TefaInterface
                     continue;
                 }
                 $this->detailTefa->create([
-                    'tefa_id' => $this->tefa->id,
+                    'tefa_id' => $tefa->id,
                     'type' => 'kegiatan',
-                    'detail' => storeImage($item, 'uploads/tefa/kegiatan/' . $this->tefa->id, $key + 1),
+                    'detail' => storeImage($item, '/uploads/tefa/kegiatan/' . $tefa->id, $key + 1),
                 ]);
             }
         }
@@ -91,15 +91,15 @@ class TefaRepository implements TefaInterface
                     continue;
                 }
 
-                if (isset($request->tefa_id[$key])) {
+                if (!isset($request->fasilitas_id[$key])) {
                     $this->detailTefa->create([
-                        'tefa_id' => $this->tefa->id,
+                        'tefa_id' => $id,
                         'type' => 'fasilitas',
-                        'detail' => storeImage($item, 'uploads/tefa/fasilitas/' . $this->tefa->id, $key + 1),
+                        'detail' => storeImage($item, '/uploads/tefa/fasilitas/' . $id, $key + 1),
                     ]);
                 } else {
-                    $this->detailTefa->where('id', $request->tefa_id[$key])->update([
-                        'detail' => storeImage($item, 'uploads/tefa/fasilitas/' . $this->tefa->id, $key + 1),
+                    $this->detailTefa->where('id', $request->fasilitas_id[$key])->update([
+                        'detail' => storeImage($item, '/uploads/tefa/fasilitas/' . $id, $key + 1),
                     ]);
                 }
             }
@@ -111,15 +111,15 @@ class TefaRepository implements TefaInterface
                     continue;
                 }
 
-                if (isset($request->tefa_id[$key])) {
+                if (!isset($request->produk_id[$key])) {
                     $this->detailTefa->create([
-                        'tefa_id' => $this->tefa->id,
+                        'tefa_id' => $id,
                         'type' => 'produk',
-                        'detail' => storeImage($item, 'uploads/tefa/produk/' . $this->tefa->id, $key + 1),
+                        'detail' => storeImage($item, '/uploads/tefa/produk/' . $id, $key + 1),
                     ]);
                 } else {
-                    $this->detailTefa->where('id', $request->tefa_id[$key])->update([
-                        'detail' => storeImage($item, 'uploads/tefa/produk/' . $this->tefa->id, $key + 1),
+                    $this->detailTefa->where('id', $request->produk_id[$key])->update([
+                        'detail' => storeImage($item, '/uploads/tefa/produk/' . $id, $key + 1),
                     ]);
                 }
             }
@@ -131,15 +131,15 @@ class TefaRepository implements TefaInterface
                     continue;
                 }
 
-                if (isset($request->tefa_id[$key])) {
+                if (!isset($request->kegiatan_id[$key])) {
                     $this->detailTefa->create([
-                        'tefa_id' => $this->tefa->id,
+                        'tefa_id' => $id,
                         'type' => 'kegiatan',
-                        'detail' => storeImage($item, 'uploads/tefa/kegiatan/' . $this->tefa->id, $key + 1),
+                        'detail' => storeImage($item, '/uploads/tefa/kegiatan/' . $id, $key + 1),
                     ]);
                 } else {
-                    $this->detailTefa->where('id', $request->tefa_id[$key])->update([
-                        'detail' => storeImage($item, 'uploads/tefa/kegiatan/' . $this->tefa->id, $key + 1),
+                    $this->detailTefa->where('id', $request->kegiatan_id[$key])->update([
+                        'detail' => storeImage($item, '/uploads/tefa/kegiatan/' . $id, $key + 1),
                     ]);
                 }
             }

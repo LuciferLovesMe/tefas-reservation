@@ -8,14 +8,15 @@ use Illuminate\View\Component;
 
 class ActionButton extends Component
 {
-    public $edit, $show;
+    public $edit, $destroy, $id;
     /**
      * Create a new component instance.
      */
-    public function __construct($edit = '#', $show = '#')
+    public function __construct($edit = '#', $destroy = '#', $id = null)
     {
         $this->edit = $edit;
-        $this->show = $show;
+        $this->destroy = $destroy;
+        $this->id = $id;
     }
 
     /**
@@ -23,6 +24,10 @@ class ActionButton extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.action-button');
+        return view('components.action-button', [
+            'edit' => $this->edit,
+            'destroy' => $this->destroy,
+            'id' => $this->id
+        ]);
     }
 }

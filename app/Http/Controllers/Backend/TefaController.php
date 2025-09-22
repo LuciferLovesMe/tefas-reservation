@@ -35,7 +35,8 @@ class TefaController extends Controller
                 ->addColumn('action', function ($data) {
                     $actionButton = new ActionButton(
                         route('tefa.edit', $data->id),
-                        route('tefa.show', $data->id)
+                        route('tefa.destroy', $data->id),
+                        $data->id
                     );
                     return $actionButton->render();
                 })
@@ -63,7 +64,10 @@ class TefaController extends Controller
         try {
             $this->tefaRepository->store($request);
             DB::commit();
-            return redirect()->back()->with('success', 'Data berhasil disimpan.');
+            return redirect()->route('tefa.index')->with([
+                'message' => 'Berhasil menambahkan data',
+                'type' => 'success'
+            ]);
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
@@ -114,16 +118,22 @@ class TefaController extends Controller
      */
     public function update(TefaRequest $request, string $id)
     {
+        // return $request;
         DB::beginTransaction();
         try {
             $this->tefaRepository->update($request, $id);
             DB::commit();
-            return redirect()->back()->with('success', 'Data berhasil diubah.');
+            return redirect()->route('tefa.index')->with([
+                'message' => 'Berhasil mengubah data',
+                'type' => 'success'
+            ]);
         } catch (Exception $e) {
             DB::rollBack();
+            return $e;
             return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
         } catch (QueryException $e) {
             DB::rollBack();
+            return $e;
             return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
         }
     }
@@ -137,7 +147,10 @@ class TefaController extends Controller
         try {
             $this->tefaRepository->destroy($id);
             DB::commit();
-            return redirect()->back()->with('success', 'Data berhasil dihapus.');
+            return redirect()->back()->with([
+                'message' => 'Berhasil menghapus data',
+                'type' => 'success'
+            ]);
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());

@@ -1,11 +1,11 @@
 <div class="table-responsive">
-  <table class="table table-striped" id="tableData">
+  <table class="table table-striped" id="tableData" style="width: 100%;">
     <thead>
       <tr>
-        <th class="text-uppercase fw-bold" style="width: 10%">No.</th>
-        <th class="text-uppercase fw-bold" style="width: 20%">Nama</th>
-        <th class="text-uppercase fw-bold" style="width: 45%">Deskripsi</th>
-        <th class="text-uppercase fw-bold" style="width: 25%">Aksi</th>
+        <th class="text-uppercase fw-bold">No.</th>
+        <th class="text-uppercase fw-bold">Nama</th>
+        <th class="text-uppercase fw-bold">Deskripsi</th>
+        <th class="text-uppercase fw-bold">Aksi</th>
       </tr>
     </thead>
     <tbody></tbody>

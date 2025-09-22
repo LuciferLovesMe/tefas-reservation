@@ -1,16 +1,38 @@
 @extends('layouts.layout')
 
+@push('styles')
+    <style>
+        /* Mengatur agar input search dan select memiliki tinggi yang sama */
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_filter input {
+            height: calc(1.5em + 0.75rem + 2px);
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            border: 1px solid #ced4da;
+        }
+        /* Menghilangkan label dari dropdown "entries" */
+        .dataTables_wrapper .dataTables_length label {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+@endpush
+
 @section('content')
-    <x-default-card>
+    <x-default-card title="Teaching Factory (TEFA)">
+        <div class="row d-flex justify-content-end">
+            <div class="col-md-4 d-flex justify-content-end">
+                <a href="{{ route('tefa.create') }}" class="btn btn-success"><i class="bi bi-plus"></i> Tambah</a>
+            </div>
+        </div>
         @include('backend.tefa._table')
     </x-default-card>
 @endsection
 
+
 @push('scripts')
     <script>
         $(document).ready(() => {
-            console.log('test cak');
-            
             const table = $("#tableData").DataTable({
                 processing: true,
                 serverSide: true,
@@ -24,6 +46,10 @@
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });
+
+            $("#tableData").on('click', '.btnDelete', (e) => {
+                console.log($(this).data('id'));
+            })
         })
     </script>
 @endpush
