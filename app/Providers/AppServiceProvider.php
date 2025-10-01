@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(TefaInterface::class, TefaRepository::class);
         $this->app->bind(RuanganInterface::class, RuanganRepository::class);
+        $this->app->bind(\App\Interfaces\ReservasiInterface::class, \App\Repositories\ReservasiRepository::class);
     }
 
     /**

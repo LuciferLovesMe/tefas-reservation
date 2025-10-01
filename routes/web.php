@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\ReservasiController;
 use App\Http\Controllers\Backend\TefaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\RuanganController;
@@ -17,9 +18,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('/tefa', TefaController::class);
+    Route::resource('/ruangan', RuanganController::class);
+    Route::resource('/reservasi', ReservasiController::class);
 });
 
-Route::resource('/tefa', TefaController::class);
-Route::resource('/ruangan', RuanganController::class);
 
 require __DIR__.'/auth.php';

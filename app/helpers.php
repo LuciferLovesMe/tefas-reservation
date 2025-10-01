@@ -13,3 +13,10 @@ if (!function_exists('storeImage')) {
         return $fileName . $fileType;
     }
 }
+
+if (!function_exists('dateFormat')) {
+    function dateFormat($date)
+    {
+        return date('d-m-Y', strtotime($date));
+    }
+}
