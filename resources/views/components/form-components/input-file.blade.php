@@ -16,7 +16,7 @@
                 <img style="max-width: 100%" src="{{ $img_src }}" alt="" class="text-center mb-3 preview-{{ $class }}">
             </div>
             <div class="col-md-12">
-                <label for="{{ $id }}" class="form-label">{{ ucwords($label) }}</label>
+                <label for="{{ $id }}" class="form-label">{{ ucwords(str_replace('_', ' ', $label)) }}</label>
                 <input type="file" onchange="imgPreview('{{ $id }}', 'preview-{{ $class }}')" class="form-control" id="{{ $id }}" name="{{ $name }}" aria-describedby="" data-id="{{ $data_id }}">
             </div>
         </div>

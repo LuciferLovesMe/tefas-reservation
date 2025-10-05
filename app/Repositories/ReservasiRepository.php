@@ -32,7 +32,16 @@ class ReservasiRepository implements ReservasiInterface
 
     public function store($request)
     {
-        return Reservasi::create($request->all());
+        return Reservasi::create([
+            'tanggal_reservasi' => now(),
+            'jadwal_mulai' => $request->jadwal_mulai,
+            'jadwal_berakhir' => $request->jadwal_berakhir,
+            'ruangan_id' => $request->ruangan_id,
+            'tefa_id' => $request->tefa_id,
+            'jumlah_peserta' => $request->jumlah_peserta,
+            'keterangan' => $request->keterangan,
+            'customer_id' => auth()->user()->id,
+        ]);
     }
     public function update($request, $id)
     {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservasiRequest;
 use App\Interfaces\ReservasiInterface;
+use App\Interfaces\RuanganInterface;
+use App\Interfaces\TefaInterface;
 use App\View\Components\ActionButton;
 use Exception;
 use Illuminate\Database\QueryException;
@@ -13,11 +15,13 @@ use Illuminate\Support\Facades\DB;
 
 class ReservasiController extends Controller
 {
-    private $reservasiRepository;
+    private $reservasiRepository, $ruanganRepository, $tefaRepository;
 
-    public function __construct(ReservasiInterface $reservasiRepository)
+    public function __construct(ReservasiInterface $reservasiRepository, RuanganInterface $ruanganRepository, TefaInterface $tefaRepository)
     {
         $this->reservasiRepository = $reservasiRepository;
+        $this->ruanganRepository = $ruanganRepository;
+        $this->tefaRepository = $tefaRepository;
     }
 
     /**
@@ -60,6 +64,10 @@ class ReservasiController extends Controller
      */
     public function create()
     {
+        $ruanganOptions = $this->ruanganRepository->getAll()->pluck('nama_ruangan', 'id')->toArray();
+        $tefaOptions = $this->tefaRepository->getAll()->pluck('nama', 'id')->toArray();
+        view()->share('ruanganOptions', $ruanganOptions);
+        view()->share('tefaOptions', $tefaOptions);
         return view('backend.reservasi.create');
     }
 
@@ -68,17 +76,29 @@ class ReservasiController extends Controller
      */
     public function store(ReservasiRequest $request)
     {
+        // return $request;
         DB::beginTransaction();
         try {
             $this->reservasiRepository->store($request);
             DB::commit();
-            return redirect()->route('admin.reservasi.index')->withToastSuccess('Data reservasi berhasil disimpan');
+            return redirect()->route('reservasi.index')->with([
+                'message' => 'Berhasil menambahkan data.',
+                'status' => 'success'
+            ]);
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->back()->withInput()->withToastError($e->getMessage());
+            return $e;
+            return redirect()->back()->withInput()->with([
+                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
+                'status' => 'error'
+            ]);
         } catch (QueryException $e) {
             DB::rollBack();
-            return redirect()->back()->withInput()->withToastError($e->getMessage());
+            return $e;
+            return redirect()->back()->withInput()->with([
+                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
+                'status' => 'error'
+            ]);
         }
     }
 
@@ -89,7 +109,10 @@ class ReservasiController extends Controller
     {
         $data = $this->reservasiRepository->getById($id);
         if (!$data) {
-            return redirect()->route('admin.reservasi.index')->withToastError('Data reservasi tidak ditemukan');
+            return redirect()->route('admin.reservasi.index')->with([
+                'message' => 'Data tidak ditemukan.',
+                'status' => 'error'
+            ]);
         }
         return view('backend.reservasi.show', compact('data'));
     }
@@ -101,7 +124,10 @@ class ReservasiController extends Controller
     {
         $data = $this->reservasiRepository->getById($id);
         if (!$data) {
-            return redirect()->route('admin.reservasi.index')->withToastError('Data reservasi tidak ditemukan');
+            return redirect()->route('admin.reservasi.index')->with([
+                'message' => 'Data tidak ditemukan.',
+                'status' => 'error'
+            ]);
         }
         return view('backend.reservasi.edit', compact('data'));
     }
@@ -115,13 +141,22 @@ class ReservasiController extends Controller
         try {
             $this->reservasiRepository->update($request, $id);
             DB::commit();
-            return redirect()->route('admin.reservasi.index')->withToastSuccess('Data reservasi berhasil diupdate');
+            return redirect()->route('admin.reservasi.index')->with([
+                'message' => 'Data reservasi berhasil diupdate.',
+                'status' => 'success'
+            ]);
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->back()->withInput()->withToastError($e->getMessage());
+            return redirect()->back()->withInput()->with([
+                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
+                'status' => 'error'
+            ]);
         } catch (QueryException $e) {
             DB::rollBack();
-            return redirect()->back()->withInput()->withToastError($e->getMessage());
+            return redirect()->back()->withInput()->with([
+                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
+                'status' => 'error'
+            ]);
         }
     }
 
@@ -134,13 +169,22 @@ class ReservasiController extends Controller
         try {
             $this->reservasiRepository->destroy($id);
             DB::commit();
-            return redirect()->route('admin.reservasi.index')->withToastSuccess('Data reservasi berhasil dihapus');
+            return redirect()->route('admin.reservasi.index')->with([
+                'message' => 'Data reservasi berhasil dihapus.',
+                'status' => 'success'
+            ]);
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->back()->withToastError($e->getMessage());
+            return redirect()->back()->with([
+                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
+                'status' => 'error'
+            ]);
         } catch (QueryException $e) {
             DB::rollBack();
-            return redirect()->back()->withToastError($e->getMessage());
+            return redirect()->back()->with([
+                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
+                'status' => 'error'
+            ]);
         }
     }
 }

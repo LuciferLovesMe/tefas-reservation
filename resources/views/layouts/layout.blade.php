@@ -20,6 +20,20 @@
       </div>
 
       <script>
+        $(document).ready(function() {
+            $('select').select2({
+                width: '100%'
+            });
+        } );
+        
+        function inpNumber (element) {
+            let input = document.getElementById(element)
+            input.addEventListener('input', function (e) {
+                let value = e.target.value
+                e.target.value = value.replace(/[^0-9]/g, '')
+            })
+        }
+
         function imgPreview (element, preview) {
             let inputFile = $(`#${element}`).prop('files')
             let file = Array.prototype.slice.call(inputFile)

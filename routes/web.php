@@ -7,11 +7,11 @@ use App\Http\Controllers\Backend\RuanganController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('layouts.layout');
+    return view('landing.index');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('layouts.layout');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
