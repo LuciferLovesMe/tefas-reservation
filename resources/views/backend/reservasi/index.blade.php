@@ -2,6 +2,13 @@
 
 @section('content')
     <x-default-card title="Reservasi">
+        @if (auth()->user()->role === 'customer')
+            <div class="row d-flex justify-content-end">
+                <div class="col-md-4 d-flex justify-content-end">
+                    <a href="{{ route('reservasi.create') }}" class="btn btn-success"><i class="bi bi-plus"></i> Tambah</a>
+                </div>
+            </div>
+        @endif
         @include('backend.reservasi._table')
     </x-default-card>
 @endsection

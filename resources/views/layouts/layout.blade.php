@@ -5,6 +5,7 @@
     
   <body>
     <div id="id">
+      @include('sweetalert::alert')
 
       @include('layouts.sidebar')
 
