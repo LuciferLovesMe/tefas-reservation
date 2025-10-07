@@ -12,10 +12,12 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
+                @if (auth()->user()->role === 'admin')
                 <li class="sidebar-title">Master Data</li>
                 <x-sidebar-item icon="bi bi-layout-text-sidebar-reverse" title="Dashboard" link="{{ route('dashboard') }}" :isActive="request()->routeIs('dashboard')" />
                 <x-sidebar-item icon="bi bi-tools" title="Teaching Factory" link="{{ route('tefa.index') }}" :isActive="request()->routeIs(['tefa.index', 'tefa.create', 'tefa.edit'])" />
                 <x-sidebar-item icon="bi bi-door-open-fill" title="Ruangan" link="{{ route('ruangan.index') }}" :isActive="request()->routeIs(['ruangan.index', 'ruangan.create', 'ruangan.edit'])" />
+                @endif
                 <li class="sidebar-title">Reservasi</li>
                 <x-sidebar-item icon="bi bi-calendar-check-fill" title="Reservasi" link="{{ route('reservasi.index') }}" :isActive="request()->routeIs(['reservasi.index', 'reservasi.create', 'reservasi.edit'])" />
             </ul>
