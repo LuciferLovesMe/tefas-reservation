@@ -20,11 +20,7 @@
 
 @section('content')
     <x-default-card title="Ruangan">
-        <div class="row d-flex justify-content-end">
-            <div class="col-md-4 d-flex justify-content-end">
-                <a href="{{ route('ruangan.create') }}" class="btn btn-success"><i class="bi bi-plus"></i> Tambah</a>
-            </div>
-        </div>
+        <x-button-add route="{{ route('ruangan.create') }}"/>
         @include('backend.ruangan._table')
     </x-default-card>
 @endsection

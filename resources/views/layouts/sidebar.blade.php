@@ -12,11 +12,12 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                <li class="sidebar-title">Menu</li>
-
-                <x-sidebar-item icon="bi bi-grid-fill" title="Dashboard" link="{{ route('dashboard') }}" :isActive="request()->routeIs('dashboard')" />
-                    <x-sidebar-item icon="bi bi-grid-fill" title="Teaching Factory" link="{{ route('tefa.index') }}" :isActive="request()->routeIs('tefa')" />
-                <x-sidebar-item icon="bi bi-grid-fill" title="Ruangan" link="{{ route('ruangan.index') }}" :isActive="request()->routeIs('ruangan')" />
+                <li class="sidebar-title">Master Data</li>
+                <x-sidebar-item icon="bi bi-layout-text-sidebar-reverse" title="Dashboard" link="{{ route('dashboard') }}" :isActive="request()->routeIs('dashboard')" />
+                <x-sidebar-item icon="bi bi-tools" title="Teaching Factory" link="{{ route('tefa.index') }}" :isActive="request()->routeIs(['tefa.index', 'tefa.create', 'tefa.edit'])" />
+                <x-sidebar-item icon="bi bi-door-open-fill" title="Ruangan" link="{{ route('ruangan.index') }}" :isActive="request()->routeIs(['ruangan.index', 'ruangan.create', 'ruangan.edit'])" />
+                <li class="sidebar-title">Reservasi</li>
+                <x-sidebar-item icon="bi bi-calendar-check-fill" title="Reservasi" link="{{ route('reservasi.index') }}" :isActive="request()->routeIs(['reservasi.index', 'reservasi.create', 'reservasi.edit'])" />
             </ul>
         </div>
         <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

@@ -20,11 +20,7 @@
 
 @section('content')
     <x-default-card title="Teaching Factory (TEFA)">
-        <div class="row d-flex justify-content-end">
-            <div class="col-md-4 d-flex justify-content-end">
-                <a href="{{ route('tefa.create') }}" class="btn btn-success"><i class="bi bi-plus"></i> Tambah</a>
-            </div>
-        </div>
+        <x-button-add route="{{ route('tefa.create') }}"/>
         @include('backend.tefa._table')
     </x-default-card>
 @endsection

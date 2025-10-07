@@ -8,6 +8,7 @@
         <th class="text-uppercase fw-bold">Jadwal Berakhir</th>
         <th class="text-uppercase fw-bold">Nama Ruangan</th>
         <th class="text-uppercase fw-bold">Nama Pemesan</th>
+        <th class="text-uppercase fw-bold">Status</th>
         <th class="text-uppercase fw-bold">Aksi</th>
       </tr>
     </thead>

@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 if (!function_exists('storeImage')) {
     function storeImage($file, $path, $iteration = 1)
     {
@@ -17,6 +19,29 @@ if (!function_exists('storeImage')) {
 if (!function_exists('dateFormat')) {
     function dateFormat($date)
     {
-        return date('d-m-Y', strtotime($date));
+        if (!$date) {
+            return '-'; // Atau string kosong sesuai kebutuhan
+        }
+
+        // Set locale ke bahasa Indonesia
+        Carbon::setLocale('id');
+
+        // Parse datetime dan format sesuai keinginan
+        return Carbon::parse($date)->translatedFormat('d F Y');
+    }
+}
+
+if (!function_exists('datetimeFormat')) {
+    function datetimeFormat($date)
+    {
+        if (!$date) {
+            return '-'; // Atau string kosong sesuai kebutuhan
+        }
+
+        // Set locale ke bahasa Indonesia
+        Carbon::setLocale('id');
+
+        // Parse datetime dan format sesuai keinginan
+        return Carbon::parse($date)->translatedFormat('d F Y H:i');
     }
 }

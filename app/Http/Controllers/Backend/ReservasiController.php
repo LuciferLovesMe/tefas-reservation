@@ -34,16 +34,20 @@ class ReservasiController extends Controller
                 ->of($this->reservasiRepository->getAll())
                 ->addIndexColumn()
                 ->addColumn('start', function ($data) {
-                    return $data->jadwal_mulai ? dateFormat($data->jadwal_mulai) : '';
+                    return $data->jadwal_mulai ? dateTimeFormat($data->jadwal_mulai) : '';
                 })
                 ->addColumn('end', function ($data) {
-                    return $data->jadwal_berakhir ? dateFormat($data->jadwal_berakhir) : '';
+                    return $data->jadwal_berakhir ? dateTimeFormat($data->jadwal_berakhir) : '';
                 })
                 ->addColumn('tanggal_reservasi', function ($data) {
                     return $data->tanggal_reservasi ? dateFormat($data->tanggal_reservasi) : '';
                 })
                 ->addColumn('nama_pemesan', function ($data) {
                     return $data->customer ? $data->customer->name : '';
+                })
+                ->addColumn('status', function ($data) {
+                    $pillStatus = new \App\View\Components\PillStatus($data->status);
+                    return $pillStatus->render();
                 })
                 ->addColumn('action', function ($data) {
                     $actionButton = new ActionButton(
