@@ -11,6 +11,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\PseudoTypes\True_;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RuanganController extends Controller
 {
@@ -61,24 +62,20 @@ class RuanganController extends Controller
         try {
             $this->ruanganRepository->store($request);
             DB::commit();
-            return redirect()->route('ruangan.index')->with([
-                'message' => 'Berhasil menambahkan data.',
-                'status' => 'success'
-            ]);
+            Alert::success('Berhasil', 'Data ruangan berhasil ditambahkan.');
+            return redirect()->route('ruangan.index');
         } catch (Exception $e) {
             DB::rollBack();
-            return $e;
-            return redirect()->back()->with([
-                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
-                'status' => 'error'
-            ]);
+            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
         } catch (QueryException $e) {
             DB::rollBack();
-            return $e;
-            return redirect()->back()->with([
-                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
-                'status' => 'error'
-            ]);
+            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
+        } catch (QueryException $e) {
+            DB::rollBack();
+            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
         }
     }
 
@@ -98,23 +95,17 @@ class RuanganController extends Controller
         try {
             $data = $this->ruanganRepository->getById($id);
             if (!$data) {
-                return redirect()->back()->with([
-                    'message' => 'Data tidak ditemukan.',
-                    'status' => 'error',
-                ]);
+                Alert::error('Gagal', 'Data tidak ditemukan.');
+                return redirect()->back();
             }
 
             return view('backend.ruangan.edit', compact('data'));
         } catch (Exception $e) {
-            return redirect()->back()->with([
-                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
-                'status' => 'error'
-            ]);
+            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
         } catch (QueryException $e) {
-            return redirect()->back()->with([
-                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
-                'status' => 'error'
-            ]);
+            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
         }
     }
 
@@ -127,22 +118,16 @@ class RuanganController extends Controller
         try {
             $this->ruanganRepository->update($request, $id);
             DB::commit();
-            return redirect()->route('ruangan.index')->with([
-                'message' => 'Berhasil mengubah data.',
-                'status' => 'success'
-            ]);
+            Alert::success('Berhasil', 'Data ruangan berhasil diupdate.');
+            return redirect()->route('ruangan.index');
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with([
-                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
-                'status' => 'error'
-            ]);
+            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
         } catch (QueryException $e) {
             DB::rollBack();
-            return redirect()->back()->with([
-                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
-                'status' => 'error'
-            ]);
+            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
         }
     }
 
@@ -155,29 +140,21 @@ class RuanganController extends Controller
         try {
             $data = $this->ruanganRepository->getById($id);
             if (!$data) {
-                return redirect()->back()->with([
-                    'message' => 'Data tidak ditemukan.',
-                    'status' => 'error',
-                ]);
+                Alert::error('Gagal', 'Data tidak ditemukan.');
+                return redirect()->back();
             }
             $this->ruanganRepository->destroy($id);
             DB::commit();
-            return redirect()->route('ruangan.index')->with([
-                'message' => 'Berhasil menghapus data.',
-                'status' => 'success'
-            ]);
+            Alert::success('Berhasil', 'Data ruangan berhasil dihapus.');
+            return redirect()->route('ruangan.index');
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with([
-                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
-                'status' => 'error'
-            ]);
+            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
         } catch (QueryException $e) {
             DB::rollBack();
-            return redirect()->back()->with([
-                'message' => 'Terjadi kesalahan. ' . $e->getMessage(),
-                'status' => 'error'
-            ]);
+            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
         }
     }
 }
