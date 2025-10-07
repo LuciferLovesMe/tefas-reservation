@@ -12,7 +12,6 @@ use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class ReservasiController extends Controller
 {
@@ -86,15 +85,15 @@ class ReservasiController extends Controller
         try {
             $this->reservasiRepository->store($request);
             DB::commit();
-            Alert::success('Berhasil', 'Data reservasi berhasil ditambahkan.');
+            alertSuccess('Data reservasi berhasil ditambahkan.');
             return redirect()->route('reservasi.index');
         } catch (Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back()->withInput();
         } catch (QueryException $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back()->withInput();
         }
     }
@@ -106,7 +105,7 @@ class ReservasiController extends Controller
     {
         $data = $this->reservasiRepository->getById($id);
         if (!$data) {
-            Alert::error('Gagal', 'Data tidak ditemukan.');
+            alertError('Data tidak ditemukan.');
             return redirect()->route('admin.reservasi.index');
         }
         return view('backend.reservasi.show', compact('data'));
@@ -119,7 +118,7 @@ class ReservasiController extends Controller
     {
         $data = $this->reservasiRepository->getById($id);
         if (!$data) {
-            Alert::error('Gagal', 'Data tidak ditemukan.');
+            alertError('Data tidak ditemukan.');
             return redirect()->route('admin.reservasi.index');
         }
         return view('backend.reservasi.edit', compact('data'));
@@ -134,15 +133,15 @@ class ReservasiController extends Controller
         try {
             $this->reservasiRepository->update($request, $id);
             DB::commit();
-            Alert::success('Berhasil', 'Data reservasi berhasil diupdate.');
+            alertSuccess('Data reservasi berhasil diupdate.');
             return redirect()->route('admin.reservasi.index');
         } catch (Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back()->withInput();
         } catch (QueryException $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back()->withInput();
         }
     }
@@ -156,15 +155,15 @@ class ReservasiController extends Controller
         try {
             $this->reservasiRepository->destroy($id);
             DB::commit();
-            Alert::success('Berhasil', 'Data reservasi berhasil dihapus.');
+            alertSuccess('Data reservasi berhasil dihapus.');
             return redirect()->route('admin.reservasi.index');
         } catch (Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         } catch (QueryException $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         }
     }

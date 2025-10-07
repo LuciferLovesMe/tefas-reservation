@@ -5,8 +5,6 @@
     
   <body>
     <div id="id">
-      @include('sweetalert::alert')
-
       @include('layouts.sidebar')
 
       {{-- <x-flash-messages /> --}}
@@ -17,12 +15,13 @@
                 <i class="bi bi-justify fs-3"></i>
             </a>
         </header>
+        @include('sweetalert::alert')
         @yield('content')
       </div>
 
       <script>
         $(document).ready(function() {
-            $('select').select2({
+            $('.select2').select2({
                 width: '100%'
             });
         } );

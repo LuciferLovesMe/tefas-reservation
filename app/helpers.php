@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 if (!function_exists('storeImage')) {
     function storeImage($file, $path, $iteration = 1)
@@ -43,5 +44,26 @@ if (!function_exists('datetimeFormat')) {
 
         // Parse datetime dan format sesuai keinginan
         return Carbon::parse($date)->translatedFormat('d F Y H:i');
+    }
+}
+
+if (!function_exists('alertSuccess')) {
+    function alertSuccess($message)
+    {
+        Alert::success('Berhasil', $message)->autoClose(3000);
+    }
+}
+
+if (!function_exists('alertError')) {
+    function alertError($message)
+    {
+        Alert::error('Gagal', $message)->autoClose(3000);
+    }
+}
+
+if (!function_exists('alertInfo')) {
+    function alertInfo($message)
+    {
+        Alert::info('Info', $message)->autoClose(3000);
     }
 }

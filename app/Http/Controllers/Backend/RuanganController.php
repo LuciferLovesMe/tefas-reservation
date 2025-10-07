@@ -10,8 +10,6 @@ use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\PseudoTypes\True_;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class RuanganController extends Controller
 {
@@ -62,19 +60,15 @@ class RuanganController extends Controller
         try {
             $this->ruanganRepository->store($request);
             DB::commit();
-            Alert::success('Berhasil', 'Data ruangan berhasil ditambahkan.');
+            alertSuccess('Data ruangan berhasil ditambahkan.');
             return redirect()->route('ruangan.index');
         } catch (Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         } catch (QueryException $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
-            return redirect()->back();
-        } catch (QueryException $e) {
-            DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -95,16 +89,16 @@ class RuanganController extends Controller
         try {
             $data = $this->ruanganRepository->getById($id);
             if (!$data) {
-                Alert::error('Gagal', 'Data tidak ditemukan.');
+                alertError('Data tidak ditemukan.');
                 return redirect()->back();
             }
 
             return view('backend.ruangan.edit', compact('data'));
         } catch (Exception $e) {
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         } catch (QueryException $e) {
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -118,15 +112,15 @@ class RuanganController extends Controller
         try {
             $this->ruanganRepository->update($request, $id);
             DB::commit();
-            Alert::success('Berhasil', 'Data ruangan berhasil diupdate.');
+            alertSuccess('Data ruangan berhasil diupdate.');
             return redirect()->route('ruangan.index');
         } catch (Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         } catch (QueryException $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -140,20 +134,20 @@ class RuanganController extends Controller
         try {
             $data = $this->ruanganRepository->getById($id);
             if (!$data) {
-                Alert::error('Gagal', 'Data tidak ditemukan.');
+                alertError('Data tidak ditemukan.');
                 return redirect()->back();
             }
             $this->ruanganRepository->destroy($id);
             DB::commit();
-            Alert::success('Berhasil', 'Data ruangan berhasil dihapus.');
+            alertSuccess('Data ruangan berhasil dihapus.');
             return redirect()->route('ruangan.index');
         } catch (Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         } catch (QueryException $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         }
     }

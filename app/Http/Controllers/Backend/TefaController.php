@@ -7,11 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TefaRequest;
 use App\Interfaces\TefaInterface;
 use App\View\Components\ActionButton;
-use App\View\Components\FormComponents\Td;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
-use RealRashid\SweetAlert\Facades\Alert;
 
 use function Termwind\render;
 
@@ -65,15 +63,15 @@ class TefaController extends Controller
         try {
             $this->tefaRepository->store($request);
             DB::commit();
-            Alert::success('Berhasil', 'Data tefa berhasil ditambahkan.');
+            alertSuccess('Data tefa berhasil ditambahkan.');
             return redirect()->route('tefa.index');
         } catch (Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         } catch (QueryException $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            alertError('Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -86,15 +84,15 @@ class TefaController extends Controller
         try {
             $data = $this->tefaRepository->getById($id);
             if (!$data) {
-                Alert::error('Gagal', 'Data tidak ditemukan.');
+                alertError('Data tidak ditemukan.');
                 return redirect()->back();
             }
             return view('backend.tefa.show', compact('data'));
         } catch (Exception $e) {
-            Alert::error('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
+            alertError('Terjadi kesalahan.' . $e->getMessage());
             return redirect()->back();
         } catch (QueryException $e) {
-            Alert::error('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
+            alertError('Terjadi kesalahan.' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -107,15 +105,15 @@ class TefaController extends Controller
         try {
             $data = $this->tefaRepository->getById($id);
             if (!$data) {
-                Alert::error('Gagal', 'Data tidak ditemukan.');
+                alertError('Data tidak ditemukan.');
                 return redirect()->back();
             }
             return view('backend.tefa.edit', compact('data'));
         } catch (Exception $e) {
-            Alert::error('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
+            alertError('Terjadi kesalahan.' . $e->getMessage());
             return redirect()->back();
         } catch (QueryException $e) {
-            Alert::error('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -130,15 +128,15 @@ class TefaController extends Controller
         try {
             $this->tefaRepository->update($request, $id);
             DB::commit();
-            Alert::success('Berhasil', 'Data tefa berhasil diupdate.');
+            alertSuccess('Data tefa berhasil diupdate.');
             return redirect()->route('tefa.index');
         } catch (Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
             return redirect()->back();
         } catch (QueryException $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -152,15 +150,15 @@ class TefaController extends Controller
         try {
             $this->tefaRepository->destroy($id);
             DB::commit();
-            Alert::success('Berhasil', 'Data tefa berhasil dihapus.');
+            alertSuccess('Berhasil', 'Data tefa berhasil dihapus.');
             return redirect()->back();
         } catch (Exception $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
             return redirect()->back();
         } catch (QueryException $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
+            alertError('Gagal', 'Terjadi kesalahan.' . $e->getMessage());
             return redirect()->back();
         }
     }
