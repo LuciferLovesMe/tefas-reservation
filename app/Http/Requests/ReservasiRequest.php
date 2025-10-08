@@ -25,53 +25,49 @@ class ReservasiRequest extends FormRequest
     {
         return [
             'ruangan_id' => 'required|integer|exists:ruangans,id',
-            'tefa_id' => 'required|integer', // Sesuaikan jika ada tabel tefa
+            'tefa_id' => 'required|integer|exists:tefas,id',
+            'jadwal_mulai' => 'required|date|after:now',
+            'jadwal_berakhir' => 'required|date|after:jadwal_mulai',
             'jumlah_peserta' => [
                 'required',
                 'integer',
                 'min:1',
-                // Validasi custom untuk cek kapasitas ruangan
                 function ($attribute, $value, $fail) {
-                    $ruangan = Ruangan::find($this->input('ruangan_id'));
-                    if ($ruangan && $value > $ruangan->kapasitas) {
-                        $fail("Jumlah peserta melebihi kapasitas ruangan ({$ruangan->kapasitas} orang).");
+                    $ruanganId = $this->input('ruangan_id');
+                    $jadwalMulai = $this->input('jadwal_mulai');
+                    $jadwalBerakhir = $this->input('jadwal_berakhir');
+                    $jumlahPesertaBaru = $value;
+
+                    if (!$ruanganId || !$jadwalMulai || !$jadwalBerakhir) {
+                        return;
+                    }
+
+                    $ruangan = Ruangan::find($ruanganId);
+                    if (!$ruangan) {
+                        $fail("Ruangan yang dipilih tidak valid.");
+                        return;
+                    }
+                    $kapasitasRuangan = $ruangan->kapasitas;
+
+                    $pesertaTerjadwal = Reservasi::where('ruangan_id', $ruanganId)
+                        ->where('status', '!=', 'cancel')
+                        ->where(function ($query) use ($jadwalMulai, $jadwalBerakhir) {
+                            $query->where('jadwal_mulai', '<', $jadwalBerakhir)
+                                  ->where('jadwal_berakhir', '>', $jadwalMulai);
+                        })
+                        ->sum('jumlah_peserta');
+
+                    $sisaKapasitas = $kapasitasRuangan - $pesertaTerjadwal;
+
+                    if ($jumlahPesertaBaru > $sisaKapasitas) {
+                        if ($sisaKapasitas <= 0) {
+                            $fail("Ruangan sudah penuh pada jadwal yang dipilih.");
+                        } else {
+                            $fail("Jumlah peserta melebihi sisa kapasitas ruangan. Kapasitas yang tersedia pada jadwal tersebut adalah {$sisaKapasitas} orang.");
+                        }
                     }
                 },
             ],
-            'jadwal_mulai' => [
-                'required',
-                'date',
-                'after:now',
-                // Validasi custom untuk cek jadwal bentrok
-                function ($attribute, $value, $fail) {
-                    $jadwalBerakhir = $this->input('jadwal_berakhir');
-                    $ruanganId = $this->input('ruangan_id');
-
-                    $isOverlapping = Reservasi::where('ruangan_id', $ruanganId)
-                        ->where('status', '!=', 'cancel')
-                        ->where(function ($query) use ($value, $jadwalBerakhir) {
-                            $query->where(function($q) use ($value, $jadwalBerakhir) {
-                                // Cek jika jadwal baru dimulai di tengah jadwal yang sudah ada
-                                $q->where('jadwal_mulai', '<=', $value)
-                                  ->where('jadwal_berakhir', '>', $value);
-                            })->orWhere(function($q) use ($value, $jadwalBerakhir) {
-                                // Cek jika jadwal baru berakhir di tengah jadwal yang sudah ada
-                                $q->where('jadwal_mulai', '<', $jadwalBerakhir)
-                                  ->where('jadwal_berakhir', '>=', $jadwalBerakhir);
-                            })->orWhere(function($q) use ($value, $jadwalBerakhir) {
-                                // Cek jika jadwal baru mencakup sepenuhnya jadwal yang sudah ada
-                                $q->where('jadwal_mulai', '>=', $value)
-                                  ->where('jadwal_berakhir', '<=', $jadwalBerakhir);
-                            });
-                        })
-                        ->exists();
-
-                    if ($isOverlapping) {
-                        $fail('Jadwal bentrok! Ruangan sudah dipesan pada rentang waktu tersebut.');
-                    }
-                }
-            ],
-            'jadwal_berakhir' => 'required|date|after:jadwal_mulai',
         ];
     }
 }

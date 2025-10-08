@@ -8,6 +8,7 @@ use App\Interfaces\ReservasiInterface;
 use App\Interfaces\RuanganInterface;
 use App\Interfaces\TefaInterface;
 use App\View\Components\ActionButton;
+use App\View\Components\ActionButtonReservation;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class ReservasiController extends Controller
                     return $pillStatus->render();
                 })
                 ->addColumn('action', function ($data) {
-                    $actionButton = new ActionButton(
+                    $actionButton = new ActionButtonReservation(
                         route('reservasi.edit', $data->id),
                         route('reservasi.destroy', $data->id),
                         $data->id

@@ -5,5 +5,10 @@
 ])
 <div class="mb-3">
     <label for="{{ $id }}" class="form-label">{{ ucwords(str_replace('_', ' ', $name)) }}</label>
-    <input type="datetime-local" class="form-control" id="{{ $id }}" name="{{ $name }}" aria-describedby="" value="{{ $value }}" onkeyup="inpNumber('{{ $id }}')" onblur="inpNumber('{{ $id }}')">
+    <input type="datetime-local" class="form-control @error($name) is-invalid @enderror" id="{{ $id }}" name="{{ $name }}" aria-describedby="{{ $id }}-error" value="{{ old($name, $value) }}">
+    @error($name)
+        <div id="{{ $id }}-error" class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
