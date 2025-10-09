@@ -12,14 +12,26 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
+                <li class="sidebar-title">Dashboard</li>
+                <x-sidebar-item icon="bi bi-layout-text-sidebar-reverse" title="Dashboard" link="{{ route('dashboard') }}" :isActive="request()->routeIs('dashboard')" />
                 @if (auth()->user()->role === 'admin')
                 <li class="sidebar-title">Master Data</li>
-                <x-sidebar-item icon="bi bi-layout-text-sidebar-reverse" title="Dashboard" link="{{ route('dashboard') }}" :isActive="request()->routeIs('dashboard')" />
                 <x-sidebar-item icon="bi bi-tools" title="Teaching Factory" link="{{ route('tefa.index') }}" :isActive="request()->routeIs(['tefa.index', 'tefa.create', 'tefa.edit'])" />
                 <x-sidebar-item icon="bi bi-door-open-fill" title="Ruangan" link="{{ route('ruangan.index') }}" :isActive="request()->routeIs(['ruangan.index', 'ruangan.create', 'ruangan.edit'])" />
                 @endif
                 <li class="sidebar-title">Reservasi</li>
                 <x-sidebar-item icon="bi bi-calendar-check-fill" title="Reservasi" link="{{ route('reservasi.index') }}" :isActive="request()->routeIs(['reservasi.index', 'reservasi.create', 'reservasi.edit'])" />
+                <li class="sidebar-title">Akun</li>
+                <li class="sidebar-item">
+                    <a href="{{ route('logout') }}" class='sidebar-link' onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
             </ul>
         </div>
         <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

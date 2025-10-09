@@ -11,7 +11,7 @@
                 <form action="{{ $destroy }}" id="form-delete-{{ $id }}" method="post" enctype="multipart/form-data">
                 @csrf
                     @method('delete')
-                    <button class="dropdown-item text-danger btnDelete" data-id="{{ $id }}" type="submit" onclick="deleteRow('form-delete-{{ $id }}')">Hapus</button>
+                    <button class="dropdown-item text-danger btnDelete delete-button" data-id="{{ $id }}" data-form-delete="form-delete-{{ $id }}" type="button" onclick="deleteRow('form-delete-{{ $id }}')">Hapus</button>
                 </form>
             </li>
         </ul>
