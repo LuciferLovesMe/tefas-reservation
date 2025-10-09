@@ -4,12 +4,13 @@ use App\Http\Controllers\Backend\ReservasiController;
 use App\Http\Controllers\Backend\TefaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\RuanganController;
+use App\Http\Controllers\LandingController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('landing.index');
-});
+Route::get('/', [LandingController::class, 'index'])->name('landing.index');
+Route::get('/detail/{id}', [LandingController::class, 'show'])->name('landing.show');
+Route::get('detail/{id}/galeri', [LandingController::class, 'galeri'])->name('landing.galeri');
 
 Route::get('/dashboard', function () {
     return view('layouts.layout');
