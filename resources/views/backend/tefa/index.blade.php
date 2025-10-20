@@ -39,6 +39,7 @@
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'nama', name: 'nama' },
                     { data: 'deskripsi', name: 'deskripsi' },
+                    { data: 'jenis_kunjungan', name: 'jenis_kunjungan' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });
