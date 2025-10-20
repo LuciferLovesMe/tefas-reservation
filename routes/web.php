@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\JenisKunjunganController;
 use App\Http\Controllers\Backend\ReservasiController;
 use App\Http\Controllers\Backend\TefaController;
 use App\Http\Controllers\ProfileController;
@@ -23,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/tefa', TefaController::class)->middleware(AdminMiddleware::class);
     Route::resource('/ruangan', RuanganController::class)->middleware(AdminMiddleware::class);
     Route::resource('/reservasi', ReservasiController::class);
+    Route::resource('/jenis-kunjungan', JenisKunjunganController::class)->middleware(AdminMiddleware::class);
 });
 
 

@@ -12,6 +12,8 @@ class Tefa extends Model
     protected $fillable = [
         'nama',
         'deskripsi',
+        'waktu_panen',
+        'jenis_kunjungan',
     ];
 
     public function fasilitasTefa()
