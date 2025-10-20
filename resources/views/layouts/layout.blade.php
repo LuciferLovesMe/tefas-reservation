@@ -63,6 +63,11 @@
         }
 
       
+        // Inisialisasi Tom Select pada elemen <select>
+        const tomSelectInstance = new TomSelect('#multipleSelect',{
+            plugins: ['remove_button'], // Menambahkan tombol 'x' untuk menghapus pilihan
+            create: false, // Tidak mengizinkan pengguna membuat opsi baru
+        });
         
         @if (Session::has('message'))
             var type = "{{ Session::get('alert-type', 'info') }}"

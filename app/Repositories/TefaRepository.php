@@ -28,7 +28,7 @@ class TefaRepository implements TefaInterface
     {
         return $this->tefa
             ->where('id', $id)
-            ->with(['fasilitasTefa', 'produkTefa', 'kegiatanTefa'])
+            ->with(['fasilitasTefa', 'produkTefa', 'kegiatanTefa', 'jenisKunjungans'])
             ->first();
     }
 
@@ -38,6 +38,8 @@ class TefaRepository implements TefaInterface
         $tefa->nama = $request->nama;
         $tefa->deskripsi = $request->deskripsi;
         $tefa->save();
+
+        $tefa->jenisKunjungans()->attach($request->jenis_kunjungan_id);
         
         if ($request->fasilitas != null || $request->fasilitas != []) {
             foreach ($request->fasilitas as $key => $item) {
@@ -85,6 +87,9 @@ class TefaRepository implements TefaInterface
         $tefa->nama = $request->nama;
         $tefa->deskripsi = $request->deskripsi;
         $tefa->save();
+
+        $tefa->jenisKunjungans()->sync($request->jenis_kunjungan_id);
+
         if ($request->fasilitas != null || $request->fasilitas != []) {
             foreach ($request->fasilitas as $key => $item) {
                 if ($item == null) {

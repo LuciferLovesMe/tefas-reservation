@@ -30,4 +30,9 @@ class Tefa extends Model
     {
         return $this->hasMany(DetailTefa::class)->where('type', 'kegiatan');
     }
+
+    public function jenisKunjungans()
+    {
+        return $this->belongsToMany(JenisKunjungan::class, 'tefa_kunjungans', 'tefa_id', 'jenis_kunjungan_id');
+    }
 }

@@ -7,11 +7,16 @@
             @method('PUT')
             <input type="hidden" name="delete_tefa_id">
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-12">
                     <x-form-components.input-text name="nama" id="nama" value="{{ $data->nama }}" />
                     <x-form-components.text-area name="deskripsi" id="deskripsi" value="{{ $data->deskripsi }}" />
+                    <x-form-components.select name="jenis_kunjungan" 
+                        :isMultiple="true" 
+                        id="jenis_kunjungan" 
+                        :options="$jenisKunjunganOptions"
+                        :multipleValue="$data->jenisKunjungans->pluck('id')->toArray()" />
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-12">
                     <div class="card border">
                         <div class="card-header text-right d-flex justify-content-between">
                             <p>Kegiatan</p>

@@ -5,11 +5,12 @@
         <x-default-card :isForm="true" title="Teaching Factory (TEFA) | Tambah">
             @csrf
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-12">
                     <x-form-components.input-text name="nama" id="nama"/>
                     <x-form-components.text-area name="deskripsi" id="deskripsi"/>
+                    <x-form-components.select name="jenis_kunjungan" :isMultiple="true" id="jenis_kunjungan" :options="$jenisKunjunganOptions" label="Jenis Kunjungan"/>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-12">
                     <div class="card border">
                         <div class="card-header text-right d-flex justify-content-between">
                             <p>Kegiatan</p>
