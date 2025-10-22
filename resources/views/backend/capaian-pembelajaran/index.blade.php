@@ -37,7 +37,6 @@
                 ajax: "{{ route('capaian-pembelajaran.index') }}",
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                    { data: 'nama_aktivitas', name: 'nama_aktivitas' },
                     { data: 'nama', name: 'nama' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],

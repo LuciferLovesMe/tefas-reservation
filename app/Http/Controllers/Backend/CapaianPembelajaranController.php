@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CapaianPembelajaranRequest;
-use App\Interfaces\AktivitasInterface;
 use App\Interfaces\CapaianPembelajaranInterface;
 use App\View\Components\ActionButton;
 use Exception;
@@ -14,12 +13,11 @@ use Illuminate\Support\Facades\DB;
 
 class CapaianPembelajaranController extends Controller
 {
-    private $capaianPembelajaranRepository, $aktivitasRepository;
+    private $capaianPembelajaranRepository;
 
-    public function __construct(CapaianPembelajaranInterface $capaianPembelajaranRepository, AktivitasInterface $aktivitasRepository)
+    public function __construct(CapaianPembelajaranInterface $capaianPembelajaranRepository)
     {
         $this->capaianPembelajaranRepository = $capaianPembelajaranRepository;
-        $this->aktivitasRepository = $aktivitasRepository;
     }
 
     /**
@@ -32,9 +30,6 @@ class CapaianPembelajaranController extends Controller
             return datatables()
                 ->of($data)
                 ->addIndexColumn()
-                ->addColumn('nama_aktivitas', function ($data) {
-                    return $data->aktivitas->nama;
-                })
                 ->addColumn('action', function ($data) {
                     $button = new ActionButton(
                         route('capaian-pembelajaran.edit', $data->id),
@@ -54,8 +49,7 @@ class CapaianPembelajaranController extends Controller
      */
     public function create()
     {
-        $aktivitas = $this->aktivitasRepository->getAll()->pluck('nama', 'id');
-        return view('backend.capaian-pembelajaran.create', compact('aktivitas'));
+        return view('backend.capaian-pembelajaran.create');
     }
 
     /**
@@ -99,8 +93,7 @@ class CapaianPembelajaranController extends Controller
             return redirect()->back();
         }
 
-        $aktivitas = $this->aktivitasRepository->getAll()->pluck('nama', 'id');
-        return view('backend.capaian-pembelajaran.edit', compact('data', 'aktivitas'));
+        return view('backend.capaian-pembelajaran.edit', compact('data'));
     }
 
     /**

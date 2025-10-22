@@ -10,11 +10,6 @@ class CapaianPembelajaran extends Model
 
     protected $fillable = [
         'nama',
-        'aktivitas_id',
     ];
 
-    public function aktivitas()
-    {
-        return $this->belongsTo(Aktivitas::class, 'aktivitas_id');
-    }
 }
