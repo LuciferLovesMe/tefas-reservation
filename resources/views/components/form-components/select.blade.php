@@ -8,7 +8,7 @@
 ])
 <div class="mb-3">
     <label for="{{ $id }}" class="form-label">{{ ucwords(str_replace(['_', '[]', 'id'], ' ', $name)) }}</label>
-    <select class="form-select select2 border border-primary @error($name) is-invalid @enderror @if($isMultiple) multipleSelect @endif" @if($isMultiple) multiple @endif id="{{ $id }}" name="{{ $name . '_id' . ($isMultiple ? '[]' : '') }}" aria-label="Default select example">
+    <select class="form-control border-none form-select select2 @error($name) is-invalid @enderror @if($isMultiple) multipleSelect @endif" @if($isMultiple) multiple @endif id="{{ $id }}" name="{{ $name . '_id' . ($isMultiple ? '[]' : '') }}" aria-label="Default select example">
         <option value="" disabled>Pilih {{ ucwords(str_replace(['_', '[]', 'id'], ' ', $name)) }}</option>
         @forelse ($options as $key => $option)
             <option value="{{ $key }}" 
