@@ -16,9 +16,11 @@
                 <x-sidebar-item icon="bi bi-layout-text-sidebar-reverse" title="Dashboard" link="{{ route('dashboard') }}" :isActive="request()->routeIs('dashboard')" />
                 @if (auth()->user()->role === 'admin')
                 <li class="sidebar-title">Master Data</li>
+                <x-sidebar-item icon="bi bi-files" title="Aktivitas" link="{{ route('aktivitas.index') }}" :isActive="request()->routeIs(['aktivitas.index', 'aktivitas.create', 'jenis-kunjungan.edit'])" />
+                <x-sidebar-item icon="bi bi-square" title="Capaian Pembelajaran" link="{{ route('capaian-pembelajaran.index') }}" :isActive="request()->routeIs(['capaian-pembelajaran.index', 'capaian-pembelajaran.create', 'capaian-pembelajaran.edit'])" />
                 <x-sidebar-item icon="bi bi-back" title="Jenis Kunjungan" link="{{ route('jenis-kunjungan.index') }}" :isActive="request()->routeIs(['jenis-kunjungan.index', 'jenis-kunjungan.create', 'jenis-kunjungan.edit'])" />
                 <x-sidebar-item icon="bi bi-tools" title="Teaching Factory" link="{{ route('tefa.index') }}" :isActive="request()->routeIs(['tefa.index', 'tefa.create', 'tefa.edit'])" />
-                <x-sidebar-item icon="bi bi-door-open-fill" title="Ruangan" link="{{ route('ruangan.index') }}" :isActive="request()->routeIs(['ruangan.index', 'ruangan.create', 'ruangan.edit'])" />
+                {{-- <x-sidebar-item icon="bi bi-door-open-fill" title="Ruangan" link="{{ route('ruangan.index') }}" :isActive="request()->routeIs(['ruangan.index', 'ruangan.create', 'ruangan.edit'])" /> --}}
                 @endif
                 <li class="sidebar-title">Reservasi</li>
                 <x-sidebar-item icon="bi bi-calendar-check-fill" title="Reservasi" link="{{ route('reservasi.index') }}" :isActive="request()->routeIs(['reservasi.index', 'reservasi.create', 'reservasi.edit'])" />

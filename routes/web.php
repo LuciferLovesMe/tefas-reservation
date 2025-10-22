@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/tefa', TefaController::class)->middleware(AdminMiddleware::class);
-    Route::resource('/ruangan', RuanganController::class)->middleware(AdminMiddleware::class);
+    // Route::resource('/ruangan', RuanganController::class)->middleware(AdminMiddleware::class);
     Route::resource('/jenis-kunjungan', JenisKunjunganController::class)->middleware(AdminMiddleware::class);
     Route::resource('/aktivitas', AktivitasController::class)->middleware(AdminMiddleware::class);
     Route::resource('/capaian-pembelajaran', CapaianPembelajaranController::class)->middleware(AdminMiddleware::class);
