@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\TefaKunjunganInterface::class, \App\Repositories\TefaKunjunganRepository::class);
         $this->app->bind(\App\Interfaces\JenisKunjunganInterface::class, \App\Repositories\JenisKunjunganRepository::class);
         $this->app->bind(\App\Interfaces\AktivitasInterface::class, \App\Repositories\AktivitasRepository::class);
+        $this->app->bind(\App\Interfaces\CapaianPembelajaranInterface::class, \App\Repositories\CapaianPembelajaranRepository::class);
     }
 
     /**

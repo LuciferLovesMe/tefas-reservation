@@ -1,0 +1,18 @@
+@extends('layouts.layout')
+
+@section('content')
+    <form action="{{ route('capaian-pembelajaran.update', $data->id) }}" method="post" enctype="multipart/form-data">
+        <x-default-card :isForm="true" title="Capaian Pembelajaran | Edit">
+            @csrf
+            @method('PUT')
+            <div class="row">
+                <div class="col-md-12">
+                    <x-form-components.select name="aktivitas" id="aktivitas" :options="$aktivitas" option-label="nama" option-value="id" label="Aktivitas" value="{{ $data->aktivitas_id }}"/>
+                </div>
+                <div class="col-md-12">
+                    <x-form-components.input-text name="nama" id="nama" value="{{ $data->nama }}"/>
+                </div>
+            </div>
+        </x-default-card>
+    </form>
+@endsection

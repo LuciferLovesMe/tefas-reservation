@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AktivitasController;
+use App\Http\Controllers\Backend\CapaianPembelajaranController;
 use App\Http\Controllers\Backend\JenisKunjunganController;
 use App\Http\Controllers\Backend\ReservasiController;
 use App\Http\Controllers\Backend\TefaController;
@@ -26,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/ruangan', RuanganController::class)->middleware(AdminMiddleware::class);
     Route::resource('/jenis-kunjungan', JenisKunjunganController::class)->middleware(AdminMiddleware::class);
     Route::resource('/aktivitas', AktivitasController::class)->middleware(AdminMiddleware::class);
+    Route::resource('/capaian-pembelajaran', CapaianPembelajaranController::class)->middleware(AdminMiddleware::class);
     Route::resource('/reservasi', ReservasiController::class);
 });
 
