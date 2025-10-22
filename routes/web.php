@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\AktivitasController;
 use App\Http\Controllers\Backend\JenisKunjunganController;
 use App\Http\Controllers\Backend\ReservasiController;
 use App\Http\Controllers\Backend\TefaController;
@@ -23,8 +24,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/tefa', TefaController::class)->middleware(AdminMiddleware::class);
     Route::resource('/ruangan', RuanganController::class)->middleware(AdminMiddleware::class);
-    Route::resource('/reservasi', ReservasiController::class);
     Route::resource('/jenis-kunjungan', JenisKunjunganController::class)->middleware(AdminMiddleware::class);
+    Route::resource('/aktivitas', AktivitasController::class)->middleware(AdminMiddleware::class);
+    Route::resource('/reservasi', ReservasiController::class);
 });
 
 
