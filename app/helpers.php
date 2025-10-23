@@ -93,3 +93,16 @@ if (!function_exists('convertJenjangToId')) {
         };
     }
 }
+
+if (!function_exists('convertWaktuPanen')) {
+    function convertWaktuPanen($value)
+    {
+        $months = explode(',', $value);
+        $monthNames = [];
+        foreach ($months as $month) {
+            $month = trim($month);
+            $monthNames[] = Carbon::create()->month((int)$month)->translatedFormat('F');
+        }
+        return implode(', ', $monthNames);
+    }
+}

@@ -43,6 +43,9 @@ class TefaController extends Controller
                     );
                     return $actionButton->render();
                 })
+                ->addColumn('deskripsi', function ($data) {
+                    return nl2br($data->deskripsi ?? '-');
+                })
                 ->rawColumns(['nama_td', 'deskripsi_td'])
                 ->make(true);
         }

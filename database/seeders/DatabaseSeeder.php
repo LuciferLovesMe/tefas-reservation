@@ -15,14 +15,17 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@user.com',
-            'password' => bcrypt('1'),
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@user.com',
+        //     'password' => bcrypt('1'),
+        // ]);
 
         $this->call([
             TefaSeeder::class,
+            AktivitasSeeder::class,
+            JenisKunjunganSeeder::class,
+            CapaianPembelajaranSeeder::class
         ]);
     }
 }
