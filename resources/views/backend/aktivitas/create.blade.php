@@ -2,7 +2,7 @@
 
 @section('content')
     <form action="{{ route('aktivitas.store') }}" method="post" enctype="multipart/form-data">
-        <x-default-card :isForm="true" title="Aktivitas | Tambah">
+        <x-default-card :isForm="true" :title="['Aktivitas', 'Tambah']">
             @csrf
             <div class="row">
                 <div class="col-md-12">

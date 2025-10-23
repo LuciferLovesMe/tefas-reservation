@@ -2,7 +2,7 @@
 
 @section('content')
     <form action="{{ route('tefa.update', $data->id) }}" method="post" enctype="multipart/form-data">
-        <x-default-card :isForm="true" title="Teaching Factory (TEFA) | Edit">
+        <x-default-card :isForm="true" :title="['Teaching Factory (TEFA)', 'Ubah']">
             @csrf
             @method('PUT')
             <input type="hidden" name="delete_tefa_id">

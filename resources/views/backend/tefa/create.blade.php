@@ -2,7 +2,7 @@
 
 @section('content')
     <form action="{{ route('tefa.store') }}" method="post" enctype="multipart/form-data">
-        <x-default-card :isForm="true" title="Teaching Factory (TEFA) | Tambah">
+        <x-default-card :isForm="true" :title="['Teaching Factory (TEFA)', 'Tambah']">
             @csrf
             <div class="row">
                 <div class="col-md-12">

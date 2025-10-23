@@ -2,7 +2,7 @@
 
 @section('content')
     <form action="{{ route('rule.update', $data->id) }}" method="post" enctype="multipart/form-data">
-        <x-default-card :isForm="true" title="Rule | Tambah">
+        <x-default-card :isForm="true" :title="['Aturan Rekomendasi', 'Ubah']">
             @csrf
             @method('PUT')
             <div class="row">

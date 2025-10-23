@@ -19,7 +19,7 @@
 @endpush
 
 @section('content')
-    <x-default-card title="Jenis Kunjungan">
+    <x-default-card :title="['Jenis Kunjungan']">
         <x-button-add route="{{ route('jenis-kunjungan.create') }}"/>
         @include('backend.jenis_kunjungan._table')
     </x-default-card>

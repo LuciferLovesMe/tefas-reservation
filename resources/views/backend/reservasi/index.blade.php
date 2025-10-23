@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-    <x-default-card title="Reservasi">
+    <x-default-card :title="['Reservasi']">
         @if (auth()->user()->role === 'customer')
         <x-button-add route="{{ route('reservasi.create') }}"/>
         @endif

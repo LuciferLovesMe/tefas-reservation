@@ -3,7 +3,7 @@
 @section('content')
     <form action="{{ route('reservasi.store') }}" method="post" enctype="multipart/form-data">
         @csrf
-        <x-default-card :isForm="true" title="Reservasi | Tambah">
+        <x-default-card :isForm="true" :title="['Reservasi', 'Tambah']">
             <div class="row">
                 <div class="col">
                     <x-form-components.input-datetime name="jadwal_mulai" id="jadwal_mulai" />

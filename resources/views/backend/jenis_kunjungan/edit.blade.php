@@ -2,7 +2,7 @@
 
 @section('content')
     <form action="{{ route('jenis-kunjungan.update', $data->id) }}" method="post" enctype="multipart/form-data">
-        <x-default-card :isForm="true" title="Jenis Kunjungan | Tambah">
+        <x-default-card :isForm="true" :title="['Jenis Kunjungan', 'Ubah']">
             @csrf
             @method('PUT')
             <div class="row">

@@ -19,7 +19,7 @@
 @endpush
 
 @section('content')
-    <x-default-card title="Aktivitas">
+    <x-default-card :title="['Aktivitas']">
         <x-button-add route="{{ route('aktivitas.create') }}"/>
         @include('backend.aktivitas._table')
     </x-default-card>

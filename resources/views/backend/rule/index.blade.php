@@ -19,7 +19,7 @@
 @endpush
 
 @section('content')
-    <x-default-card title="Aturan">
+    <x-default-card :title="['Aturan Rekomendasi']">
         <x-button-add route="{{ route('rule.create') }}"/>
         @include('backend.rule._table')
     </x-default-card>

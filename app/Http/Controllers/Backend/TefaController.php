@@ -43,10 +43,6 @@ class TefaController extends Controller
                     );
                     return $actionButton->render();
                 })
-                ->addColumn('jenis_kunjungan', function ($data) {
-                    $jenisKunjungan = $data->jenisKunjungans->pluck('nama')->toArray();
-                    return $jenisKunjungan ? implode(', ', $jenisKunjungan) : '-';
-                })
                 ->rawColumns(['nama_td', 'deskripsi_td'])
                 ->make(true);
         }

@@ -2,7 +2,7 @@
 
 @section('content')
     <form action="{{ route('rule.store') }}" method="post" enctype="multipart/form-data">
-        <x-default-card :isForm="true" title="Rule | Tambah">
+        <x-default-card :isForm="true" :title="['Aturan Rekomendasi', 'Tambah']">
             @csrf
             <div class="row">
                 <div class="col-md-12">
