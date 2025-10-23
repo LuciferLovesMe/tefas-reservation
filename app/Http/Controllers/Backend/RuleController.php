@@ -163,4 +163,16 @@ class RuleController extends Controller
             return redirect()->back()->withInput();
         }
     }
+
+    public function getCapaianByAktivitas($id)
+    {
+        $data = $this->ruleRepository->getCapaianByAktivitas($id);
+        return response()->json($data);
+    }
+
+    public function getJenisKunjunganByCapaian($id)
+    {
+        $data = $this->ruleRepository->getJenisKunjunganByCapaian($id);
+        return response()->json($data);
+    }
 }

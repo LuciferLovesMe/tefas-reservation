@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Interfaces\RuleInterface;
+use App\Models\CapaianPembelajaran;
+use App\Models\JenisKunjungan;
 use App\Models\Rule;
 
 class RuleRepository implements RuleInterface
@@ -28,18 +30,12 @@ class RuleRepository implements RuleInterface
 
     public function store ($data)
     {
-        $prioritas = 0;
-        if (is_null($data->jenis_kunjungan_id)) $prioritas++;
-        if (is_null($data->aktivitas_id)) $prioritas++;
-        if (is_null($data->capaian_pembelajaran_id)) $prioritas++;
-        if (is_null($data->jenjang_id)) $prioritas++;
-
         return Rule::create([
             'jenis_kunjungan_id' => $data->jenis_kunjungan_id,
             'aktivitas_id' => $data->aktivitas_id,
             'capaian_pembelajaran_id' => $data->capaian_pembelajaran_id,
             'tefa_id' => $data->tefa_id,
-            'prioritas' => $prioritas + 1,
+            'prioritas' => 1,
             'jenjang' => convertJenjang($data->jenjang_id),
         ]);
     }
@@ -68,5 +64,15 @@ class RuleRepository implements RuleInterface
     public function destroy ($id)
     {
         return Rule::destroy($id);
+    }
+
+    public function getCapaianByAktivitas($id)
+    {
+        return CapaianPembelajaran::where('aktivitas_id', $id)->get()->pluck('nama', 'id');
+    }
+
+    public function getJenisKunjunganByCapaian($id)
+    {
+        return JenisKunjungan::where('capaian_pembelajaran_id', $id)->get()->pluck('nama', 'id');
     }
 }

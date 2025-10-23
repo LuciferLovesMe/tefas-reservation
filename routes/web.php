@@ -6,7 +6,6 @@ use App\Http\Controllers\Backend\JenisKunjunganController;
 use App\Http\Controllers\Backend\ReservasiController;
 use App\Http\Controllers\Backend\TefaController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Backend\RuanganController;
 use App\Http\Controllers\Backend\RuleController;
 use App\Http\Controllers\LandingController;
 use App\Http\Middleware\AdminMiddleware;
@@ -29,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/aktivitas', AktivitasController::class)->middleware(AdminMiddleware::class);
     Route::resource('/capaian-pembelajaran', CapaianPembelajaranController::class)->middleware(AdminMiddleware::class);
     Route::resource('/rule', RuleController::class)->middleware(AdminMiddleware::class);
+    Route::get('getCapaianByAktivitas/{id}', [RuleController::class, 'getCapaianByAktivitas'])->name('getCapaianByAktivitas');
+    Route::get('getJenisKunjunganByCapaian/{id}', [RuleController::class, 'getJenisKunjunganByCapaian'])->name('getJenisKunjunganByCapaian');
     Route::resource('/reservasi', ReservasiController::class);
 });
 

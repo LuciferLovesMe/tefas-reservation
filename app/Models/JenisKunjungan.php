@@ -24,4 +24,9 @@ class JenisKunjungan extends Model
     {
         return $this->hasMany(Rule::class, 'jenis_kunjungan_id');
     }
+
+    public function capaianPembelajarans()
+    {
+        return $this->hasMany(CapaianPembelajaran::class, 'jenis_kunjungan_id');
+    }
 }

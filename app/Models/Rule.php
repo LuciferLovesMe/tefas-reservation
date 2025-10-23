@@ -10,8 +10,6 @@ class Rule extends Model
 
     protected $fillable = [
         'jenis_kunjungan_id',
-        'aktivitas_id',
-        'capaian_pembelajaran_id',
         'tefa_id',
         'prioritas',
         'jenjang',
@@ -20,16 +18,6 @@ class Rule extends Model
     public function jenisKunjungan()
     {
         return $this->belongsTo(JenisKunjungan::class);
-    }
-
-    public function aktivitas()
-    {
-        return $this->belongsTo(Aktivitas::class);
-    }
-
-    public function capaianPembelajaran()
-    {
-        return $this->belongsTo(CapaianPembelajaran::class);
     }
 
     public function tefa()

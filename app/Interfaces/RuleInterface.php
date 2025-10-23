@@ -13,4 +13,8 @@ interface RuleInterface
     public function update ($id, $data);
 
     public function destroy ($id);
+
+    public function getCapaianByAktivitas($id);
+
+    public function getJenisKunjunganByCapaian($id);
 }
