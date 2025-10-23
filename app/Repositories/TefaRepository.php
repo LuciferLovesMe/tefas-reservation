@@ -19,7 +19,6 @@ class TefaRepository implements TefaInterface
     public function getAll()
     {
         return $this->tefa
-            ->with('jenisKunjungans')
             // ->with(['fasilitiasTefa', 'produkTefa', 'kegiatanTefa'])
             ->orderBy('id', 'desc')
             ->get();

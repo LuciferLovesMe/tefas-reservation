@@ -14,4 +14,9 @@ class Aktivitas extends Model
     ];
 
     protected $table = 'aktivitas';
+
+    public function rules()
+    {
+        return $this->hasMany(Rule::class, 'aktivitas_id');
+    }
 }

@@ -12,4 +12,8 @@ class CapaianPembelajaran extends Model
         'nama',
     ];
 
+    public function rules()
+    {
+        return $this->hasMany(Rule::class, 'capaian_pembelajaran_id');
+    }
 }

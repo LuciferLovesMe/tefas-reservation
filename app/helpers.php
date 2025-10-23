@@ -67,3 +67,29 @@ if (!function_exists('alertInfo')) {
         Alert::info('Info', $message)->autoClose(3000);
     }
 }
+
+if (!function_exists('convertJenjang')) {
+    function convertJenjang($value)
+    {
+        return match ($value) {
+            '0' => 'TK',
+            '1' => 'SD',
+            '2' => 'SMP',
+            '3' => 'SMA',
+            default => 'Semua Jenjang',
+        };
+    }
+}
+
+if (!function_exists('convertJenjangToId')) {
+    function convertJenjangToId($value)
+    {
+        return match ($value) {
+            'TK' => '0',
+            'SD' => '1',
+            'SMP' => '2',
+            'SMA' => '3',
+            default => null,
+        };
+    }
+}
