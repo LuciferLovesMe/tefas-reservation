@@ -6,6 +6,7 @@
             @csrf
             <div class="row">
                 <div class="col-md-12">
+                    <x-form-components.input-text name="jenjang" id="jenjang"/>
                     <x-form-components.input-text name="nama" id="nama"/>
                 </div>
             </div>

@@ -21,6 +21,7 @@ class CapaianPembelajaranRepository implements CapaianPembelajaranInterface
     {
         return CapaianPembelajaran::create([
             'nama' => $data->nama,
+            'jenjang' => $data->jenjang,
             'aktivitas_id' => $data->aktivitas_id,
         ]);
     }
@@ -30,6 +31,7 @@ class CapaianPembelajaranRepository implements CapaianPembelajaranInterface
         $capaian = CapaianPembelajaran::findOrFail($id);
         $capaian->update([
             'nama' => $data->nama,
+            'jenjang' => $data->jenjang,
             'aktivitas_id' => $data->aktivitas_id,
         ]);
         return $capaian;
