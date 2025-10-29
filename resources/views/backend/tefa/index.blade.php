@@ -38,7 +38,10 @@
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'nama', name: 'nama' },
+                    { data: 'max_peserta', name: 'max_peserta' },
                     { data: 'deskripsi', name: 'deskripsi' },
+                    { data: 'jenis_kunjungan', name: 'jenis_kunjungan' },
+                    { data: 'waktu_panen', name: 'waktu_panen' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });

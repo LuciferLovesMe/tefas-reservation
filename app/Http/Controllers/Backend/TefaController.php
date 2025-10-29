@@ -46,6 +46,16 @@ class TefaController extends Controller
                 ->addColumn('deskripsi', function ($data) {
                     return nl2br($data->deskripsi ?? '-');
                 })
+                ->addColumn('jenis_kunjungan', function ($data) {
+                    $jenisKunjunganNames = $data->jenisKunjungans->pluck('nama')->toArray();
+                    return nl2br(implode(', ', $jenisKunjunganNames) ?: '-');
+                })
+                ->addColumn('max_peserta', function ($data) {
+                    return $data->max_jumlah_peserta ?? '-';
+                })
+                ->addColumn('waktu_panen', function ($data) {
+                    return $data->waktu_panen ? convertWaktuPanen($data->waktu_panen) : 'Selalu Tersedia';
+                })
                 ->rawColumns(['nama_td', 'deskripsi_td'])
                 ->make(true);
         }
@@ -59,6 +69,8 @@ class TefaController extends Controller
     public function create()
     {
         $jenisKunjunganOptions = $this->jenisKunjunganRepository->getAll()->pluck('nama', 'id');
+        $waktuPanenOptions = waktuPanenOptions();
+        view()->share('waktuPanenOptions', $waktuPanenOptions);
         return view('backend.tefa.create', compact('jenisKunjunganOptions'));
     }
 
@@ -113,6 +125,8 @@ class TefaController extends Controller
         try {
             $data = $this->tefaRepository->getById($id);
             $jenisKunjunganOptions = $this->jenisKunjunganRepository->getAll()->pluck('nama', 'id');
+            $waktuPanenOptions = waktuPanenOptions();
+            view()->share('waktuPanenOptions', $waktuPanenOptions);
             view()->share('jenisKunjunganOptions', $jenisKunjunganOptions);
             if (!$data) {
                 alertError('Data tidak ditemukan.');

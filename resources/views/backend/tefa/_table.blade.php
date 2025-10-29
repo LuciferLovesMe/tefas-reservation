@@ -4,7 +4,10 @@
       <tr>
         <th class="text-uppercase fw-bold">No.</th>
         <th class="text-uppercase fw-bold">Nama</th>
+        <th class="text-uppercase fw-bold">Maks Peserta</th>
         <th class="text-uppercase fw-bold">Deskripsi</th>
+        <th class="text-uppercase fw-bold">Jenis Kunjungan</th>
+        <th class="text-uppercase fw-bold">Waktu Panen</th>
         <th class="text-uppercase fw-bold">Aksi</th>
       </tr>
     </thead>

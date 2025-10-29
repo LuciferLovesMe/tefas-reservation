@@ -9,6 +9,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <x-form-components.input-text name="nama" id="nama" value="{{ $data->nama }}" />
+                    <x-form-components.input-number name="max_jumlah_peserta" id="max_jumlah_peserta" label="Maksimal Jumlah Peserta" value="{{ $data->max_jumlah_peserta }}"/>
+                    <x-form-components.select name="waktu_panen" :isMultiple="true" id="waktu_panen" :options="$waktuPanenOptions" :multipleValue="explode(',', $data->waktu_panen)" label="Waktu Panen"/>
+                    <x-form-components.select name="jenis_kunjungan" :isMultiple="true" id="jenis_kunjungan" :options="$jenisKunjunganOptions" :multipleValue="$data->jenisKunjungans->pluck('id')->toArray()" label="Jenis Kunjungan"/>
                     <x-form-components.text-area name="deskripsi" id="deskripsi" value="{{ $data->deskripsi }}" />
                 </div>
                 <div class="col-md-12">

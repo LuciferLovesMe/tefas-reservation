@@ -7,8 +7,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <x-form-components.input-text name="nama" id="nama"/>
-                    <x-form-components.text-area name="deskripsi" id="deskripsi"/>
+                    <x-form-components.input-number name="max_jumlah_peserta" id="max_jumlah_peserta" label="Maksimal Jumlah Peserta"/>
+                    <x-form-components.select name="waktu_panen" :isMultiple="true" id="waktu_panen" :options="$waktuPanenOptions" label="Waktu Panen"/>
                     <x-form-components.select name="jenis_kunjungan" :isMultiple="true" id="jenis_kunjungan" :options="$jenisKunjunganOptions" label="Jenis Kunjungan"/>
+                    <x-form-components.text-area name="deskripsi" id="deskripsi"/>
                 </div>
                 <div class="col-md-12">
                     <div class="card border">

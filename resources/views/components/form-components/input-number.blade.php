@@ -5,7 +5,7 @@
 ])
 <div class="mb-3">
     <label for="{{ $id }}" class="form-label">{{ ucwords(str_replace('_', ' ', $name)) }}</label>
-    <input type="text" class="form-control @error($name) is-invalid @enderror" id="{{ $id }}" name="{{ $name }}" aria-describedby="{{ $id }}-error" value="{{ old($name, $value) }}" onkeyup="inpNumber('{{ $id }}')" onblur="inpNumber('{{ $id }}')">
+    <input type="text" class="form-control border border-secondary @error($name) is-invalid @enderror" id="{{ $id }}" name="{{ $name }}" aria-describedby="{{ $id }}-error" value="{{ old($name, $value) }}" onkeyup="inpNumber('{{ $id }}')" onblur="inpNumber('{{ $id }}')">
     @error($name)
         <div id="{{ $id }}-error" class="invalid-feedback">
             {{ $message }}

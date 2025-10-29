@@ -13,7 +13,7 @@ class Tefa extends Model
         'nama',
         'deskripsi',
         'waktu_panen',
-        'jenis_kunjungan',
+        'max_jumlah_peserta',
     ];
 
     public function fasilitasTefa()
@@ -34,5 +34,10 @@ class Tefa extends Model
     public function rule ()
     {
         return $this->hasMany(Rule::class, 'tefa_id');
+    }
+
+    public function jenisKunjungans()
+    {
+        return $this->belongsToMany(JenisKunjungan::class, 'tefa_kunjungans', 'tefa_id', 'jenis_kunjungan_id');
     }
 }

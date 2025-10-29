@@ -20,6 +20,7 @@ class TefaRepository implements TefaInterface
     {
         return $this->tefa
             // ->with(['fasilitiasTefa', 'produkTefa', 'kegiatanTefa'])
+            ->with(['jenisKunjungans'])
             ->orderBy('id', 'desc')
             ->get();
     }
@@ -37,6 +38,8 @@ class TefaRepository implements TefaInterface
         $tefa = new Tefa();
         $tefa->nama = $request->nama;
         $tefa->deskripsi = $request->deskripsi;
+        $tefa->max_jumlah_peserta = $request->max_jumlah_peserta;
+        $tefa->waktu_panen = isset($request->waktu_panen) ? implode(',', $request->waktu_panen) : '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12';
         $tefa->save();
 
         $tefa->jenisKunjungans()->attach($request->jenis_kunjungan_id);
@@ -86,6 +89,7 @@ class TefaRepository implements TefaInterface
         $tefa = $this->tefa->findOrFail($id);
         $tefa->nama = $request->nama;
         $tefa->deskripsi = $request->deskripsi;
+        $tefa->max_jumlah_peserta = $request->max_jumlah_peserta;
         $tefa->save();
 
         $tefa->jenisKunjungans()->sync($request->jenis_kunjungan_id);

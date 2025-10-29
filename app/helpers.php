@@ -99,10 +99,24 @@ if (!function_exists('convertWaktuPanen')) {
     {
         $months = explode(',', $value);
         $monthNames = [];
+        Carbon::setLocale('id');
         foreach ($months as $month) {
             $month = trim($month);
             $monthNames[] = Carbon::create()->month((int)$month)->translatedFormat('F');
         }
         return implode(', ', $monthNames);
+    }
+}
+
+if (!function_exists(('waktuPanenOptions'))) {
+    function waktuPanenOptions()
+    {
+        $options = [];
+        Carbon::setLocale('id');
+        for ($i = 1; $i <= 12; $i++) {
+            $monthName = Carbon::create()->month($i)->translatedFormat('F');
+            $options[$i] = $monthName;
+        }
+        return $options;
     }
 }
