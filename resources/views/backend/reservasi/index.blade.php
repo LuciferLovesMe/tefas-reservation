@@ -23,7 +23,7 @@
                     { data: 'tanggal_reservasi', name: 'tanggal_reservasi' },
                     { data: 'start', name: 'start' },
                     { data: 'end', name: 'end' },
-                    { data: 'ruangan.nama_ruangan', name: 'ruangan.nama_ruangan' },
+                    { data: 'nama_tefa', name: 'nama_tefa' },
                     { data: 'nama_pemesan', name: 'nama_pemesan' },
                     { data: 'status', name: 'status' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },

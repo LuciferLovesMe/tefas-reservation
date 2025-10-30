@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservasiRequest;
+use App\Interfaces\AktivitasInterface;
 use App\Interfaces\ReservasiInterface;
 use App\Interfaces\RuanganInterface;
 use App\Interfaces\TefaInterface;
@@ -16,13 +17,14 @@ use Illuminate\Support\Facades\DB;
 
 class ReservasiController extends Controller
 {
-    private $reservasiRepository, $ruanganRepository, $tefaRepository;
+    private $reservasiRepository, $ruanganRepository, $tefaRepository, $aktivitasRepository;
 
-    public function __construct(ReservasiInterface $reservasiRepository, RuanganInterface $ruanganRepository, TefaInterface $tefaRepository)
+    public function __construct(ReservasiInterface $reservasiRepository, RuanganInterface $ruanganRepository, TefaInterface $tefaRepository, AktivitasInterface $aktivitasRepository)
     {
         $this->reservasiRepository = $reservasiRepository;
         $this->ruanganRepository = $ruanganRepository;
         $this->tefaRepository = $tefaRepository;
+        $this->aktivitasRepository = $aktivitasRepository;
     }
 
     /**
@@ -35,20 +37,23 @@ class ReservasiController extends Controller
                 ->of($this->reservasiRepository->getAll())
                 ->addIndexColumn()
                 ->addColumn('start', function ($data) {
-                    return $data->jadwal_mulai ? dateTimeFormat($data->jadwal_mulai) : '';
+                    return $data->jadwal_mulai ? dateTimeFormat($data->jadwal_mulai) : '-';
                 })
                 ->addColumn('end', function ($data) {
-                    return $data->jadwal_berakhir ? dateTimeFormat($data->jadwal_berakhir) : '';
+                    return $data->jadwal_berakhir ? dateTimeFormat($data->jadwal_berakhir) : '-';
                 })
                 ->addColumn('tanggal_reservasi', function ($data) {
-                    return $data->tanggal_reservasi ? dateFormat($data->tanggal_reservasi) : '';
+                    return $data->tanggal_reservasi ? dateFormat($data->tanggal_reservasi) : '-';
                 })
                 ->addColumn('nama_pemesan', function ($data) {
-                    return $data->customer ? $data->customer->name : '';
+                    return $data->customer ? $data->customer->name : '-';
                 })
                 ->addColumn('status', function ($data) {
                     $pillStatus = new \App\View\Components\PillStatus($data->status);
                     return $pillStatus->render();
+                })
+                ->addColumn('nama_tefa', function ($data) {
+                    return $data->tefa ? $data->tefa->nama : '-';
                 })
                 ->addColumn('action', function ($data) {
                     $actionButton = new ActionButtonReservation(
@@ -69,11 +74,8 @@ class ReservasiController extends Controller
      */
     public function create()
     {
-        $ruanganOptions = $this->ruanganRepository->getAll()->pluck('nama_ruangan', 'id')->toArray();
-        $tefaOptions = $this->tefaRepository->getAll()->pluck('nama', 'id')->toArray();
-        view()->share('ruanganOptions', $ruanganOptions);
-        view()->share('tefaOptions', $tefaOptions);
-        return view('backend.reservasi.create');
+        $aktivitas = $this->aktivitasRepository->getAll()->pluck('nama', 'id')->toArray();
+        return view('backend.reservasi.create', compact('aktivitas'));
     }
 
     /**
@@ -118,11 +120,40 @@ class ReservasiController extends Controller
     public function edit(string $id)
     {
         $data = $this->reservasiRepository->getById($id);
+        $aktivitas = $this->aktivitasRepository->getAll()->pluck('nama', 'id')->toArray();
         if (!$data) {
             alertError('Data tidak ditemukan.');
             return redirect()->route('admin.reservasi.index');
         }
-        return view('backend.reservasi.edit', compact('data'));
+        $data->load('tefa.jenisKunjungans.capaianPembelajarans.aktivitas');
+        $saved_jenis_kunjungan_id = $data->jenis_kunjungan_id ?? null;
+        $data_jenis_kunjungan = null;
+        if (isset($data->tefa->jenisKunjungans)) {
+            foreach ($data->tefa->jenisKunjungans as $jenisKunjungan) {
+                if ($data->customer->tipe_sekolah == $jenisKunjungan->capaianPembelajarans->jenjang) {
+                    $saved_jenis_kunjungan_id = $jenisKunjungan->id;
+                    $data_jenis_kunjungan = $jenisKunjungan;
+                    break;
+                }
+            }
+        }
+        $saved_capaian_id = $jenisKunjungan->capaian_pembelajaran_id ?? null;
+        $saved_aktivitas_id = $jenisKunjungan->capaianPembelajarans->aktivitas_id ?? null;
+        $saved_tefa_id = $data->tefa_id ?? null;
+        
+        // 4. (BARU) Ambil Jenjang Customer
+        $customer_jenjang = $data->customer->tipe_sekolah ?? null; // e.g., "SD"
+
+        // return [
+        //     'data' => $data,
+        //     'aktivitas' => $aktivitas,
+        //     'saved_jenis_kunjungan_id' => $saved_jenis_kunjungan_id,
+        //     'saved_capaian_id' => $saved_capaian_id,
+        //     'saved_aktivitas_id' => $saved_aktivitas_id,
+        //     'saved_tefa_id' => $saved_tefa_id,
+        //     'customer_jenjang' => $customer_jenjang
+        // ];
+        return view('backend.reservasi.edit', compact('data', 'aktivitas', 'saved_jenis_kunjungan_id', 'saved_capaian_id', 'saved_aktivitas_id', 'saved_tefa_id', 'customer_jenjang'));
     }
 
     /**
@@ -167,5 +198,27 @@ class ReservasiController extends Controller
             alertError('Terjadi kesalahan. ' . $e->getMessage());
             return redirect()->back();
         }
+    }
+
+    public function getCapaianByAktivitas(Request $request)
+    {
+        $aktivitasId = $request->query('aktivitas_id');
+        $jenjang = $request->query('jenjang');
+        $capaianPembelajaran = $this->reservasiRepository->getCapaianByAktivitas($aktivitasId, $jenjang);
+        return response()->json($capaianPembelajaran);
+    }
+
+    public function getJenisKunjunganByCapaian($id)
+    {
+        $data = $this->reservasiRepository->getJenisKunjunganByCapaian($id);
+        return response()->json($data);
+    }
+
+    public function getTefaByJenisKunjungan(Request $request)
+    {
+        $bulan = ($request->get('tanggal')) ? date('m', strtotime($request->get('tanggal'))) : null;
+        $id = $request->get('jenis_kunjungan_id');
+        $data = $this->reservasiRepository->getTefaByJenisKunjungan($id, $bulan);
+        return response()->json($data);
     }
 }

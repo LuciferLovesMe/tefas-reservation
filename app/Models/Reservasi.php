@@ -17,15 +17,9 @@ class Reservasi extends Model
         'jadwal_berakhir',
         'jumlah_peserta',
         'status',
-        'ruangan_id',
         'tefa_id',
         'customer_id',
     ];
-
-    public function ruangan ()
-    {
-        return $this->belongsTo(Ruangan::class);
-    }
 
     public function tefa ()
     {

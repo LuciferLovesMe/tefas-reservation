@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Reservasi;
 use App\Models\Ruangan;
+use App\Models\Tefa;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ReservasiRequest extends FormRequest
@@ -24,7 +25,6 @@ class ReservasiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ruangan_id' => 'required|integer|exists:ruangans,id',
             'tefa_id' => 'required|integer|exists:tefas,id',
             'jadwal_mulai' => 'required|date|after:now',
             'jadwal_berakhir' => 'required|date|after:jadwal_mulai',
@@ -33,23 +33,19 @@ class ReservasiRequest extends FormRequest
                 'integer',
                 'min:1',
                 function ($attribute, $value, $fail) {
-                    $ruanganId = $this->input('ruangan_id');
                     $jadwalMulai = $this->input('jadwal_mulai');
                     $jadwalBerakhir = $this->input('jadwal_berakhir');
+                    $tefaId = $this->input('tefa_id');
                     $jumlahPesertaBaru = $value;
 
-                    if (!$ruanganId || !$jadwalMulai || !$jadwalBerakhir) {
+                    if (!$jadwalMulai || !$jadwalBerakhir) {
                         return;
                     }
 
-                    $ruangan = Ruangan::find($ruanganId);
-                    if (!$ruangan) {
-                        $fail("Ruangan yang dipilih tidak valid.");
-                        return;
-                    }
-                    $kapasitasRuangan = $ruangan->kapasitas;
+                    $tefa = Tefa::find($tefaId);
+                    $kapasitasTefa = $tefa->max_jumlah_peserta;
 
-                    $pesertaTerjadwal = Reservasi::where('ruangan_id', $ruanganId)
+                    $pesertaTerjadwal = Reservasi::where('tefa_id', $tefaId)
                         ->where('status', '!=', 'cancel')
                         ->where(function ($query) use ($jadwalMulai, $jadwalBerakhir) {
                             $query->where('jadwal_mulai', '<', $jadwalBerakhir)
@@ -57,7 +53,7 @@ class ReservasiRequest extends FormRequest
                         })
                         ->sum('jumlah_peserta');
 
-                    $sisaKapasitas = $kapasitasRuangan - $pesertaTerjadwal;
+                    $sisaKapasitas = $kapasitasTefa - $pesertaTerjadwal;
 
                     if ($jumlahPesertaBaru > $sisaKapasitas) {
                         if ($sisaKapasitas <= 0) {

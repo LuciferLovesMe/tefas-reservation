@@ -13,4 +13,10 @@ interface ReservasiInterface
     public function update ($request, $id);
 
     public function destroy ($id);
+
+    public function getCapaianByAktivitas($aktivitasId, $jenjang);
+
+    public function getJenisKunjunganByCapaian($capaianId);
+
+    public function getTefaByJenisKunjungan($jenisKunjunganId, $bulan);
 }

@@ -3,14 +3,16 @@
 namespace App\Repositories;
 
 use App\Interfaces\ReservasiInterface;
+use App\Models\CapaianPembelajaran;
+use App\Models\JenisKunjungan;
 use App\Models\Reservasi;
+use App\Models\Tefa;
 
 class ReservasiRepository implements ReservasiInterface
 {
     public function getAll()
     {
-        return Reservasi::with('ruangan')
-            ->with('tefa')
+        return Reservasi::with('tefa')
             ->with('customer')
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -18,11 +20,9 @@ class ReservasiRepository implements ReservasiInterface
 
     public function getById($id)
     {
-        return Reservasi::with('ruangan')
-            ->with('tefa')
-            ->with('customer')
-            ->where('id', $id)
-            ->first();
+        return Reservasi::with('customer')
+            ->with('tefa.jenisKunjungans.capaianPembelajarans.aktivitas') 
+            ->findOrFail($id);
     }
 
     public function create($data)
@@ -36,7 +36,6 @@ class ReservasiRepository implements ReservasiInterface
             'tanggal_reservasi' => now(),
             'jadwal_mulai' => $request->jadwal_mulai,
             'jadwal_berakhir' => $request->jadwal_berakhir,
-            'ruangan_id' => $request->ruangan_id,
             'tefa_id' => $request->tefa_id,
             'jumlah_peserta' => $request->jumlah_peserta,
             'keterangan' => $request->keterangan,
@@ -60,5 +59,45 @@ class ReservasiRepository implements ReservasiInterface
             return $reservasi->delete();
         }
         return null;
+    }
+
+    public function getCapaianByAktivitas($aktivitasId, $jenjang)
+    {
+        return CapaianPembelajaran::where('aktivitas_id', $aktivitasId)
+            ->where('jenjang', $jenjang)
+            ->get()
+            ->pluck('nama', 'id')
+            ->toArray();
+    }
+
+    public function getJenisKunjunganByCapaian($capaianId)
+    {
+        return JenisKunjungan::where('capaian_pembelajaran_id', $capaianId)
+            ->get()
+            ->pluck('nama', 'id')
+            ->toArray();
+    }
+
+    public function getTefaByJenisKunjungan($jenisKunjunganId, $bulan)
+    {
+        $jenisKunjungan = JenisKunjungan::with('capaianPembelajarans.aktivitas')
+            ->find($jenisKunjunganId);
+
+        // return $jenisKunjungan;
+        $namaAktivitas = $jenisKunjungan?->capaianPembelajaran?->aktivitas?->nama;
+
+        $tefasQuery = Tefa::query();
+
+        $tefasQuery->whereHas('jenisKunjungans', function ($query) use ($jenisKunjunganId) {
+            $query->where('jenis_kunjungans.id', $jenisKunjunganId);
+        });
+
+        if ($namaAktivitas === 'Pertanian') {
+            $tefasQuery->whereMonth('waktu_panen', $bulan);
+        }
+
+        $tefas = $tefasQuery->get()->pluck('nama', 'id')->toArray();
+
+        return $tefas;
     }
 }

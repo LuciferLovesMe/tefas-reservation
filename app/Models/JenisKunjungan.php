@@ -27,6 +27,6 @@ class JenisKunjungan extends Model
 
     public function capaianPembelajarans()
     {
-        return $this->hasMany(CapaianPembelajaran::class, 'jenis_kunjungan_id');
+        return $this->belongsTo(CapaianPembelajaran::class, 'capaian_pembelajaran_id');
     }
 }

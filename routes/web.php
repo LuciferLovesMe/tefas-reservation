@@ -28,8 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/aktivitas', AktivitasController::class)->middleware(AdminMiddleware::class);
     Route::resource('/capaian-pembelajaran', CapaianPembelajaranController::class)->middleware(AdminMiddleware::class);
     Route::resource('/rule', RuleController::class)->middleware(AdminMiddleware::class);
-    Route::get('getCapaianByAktivitas/{id}', [RuleController::class, 'getCapaianByAktivitas'])->name('getCapaianByAktivitas');
-    Route::get('getJenisKunjunganByCapaian/{id}', [RuleController::class, 'getJenisKunjunganByCapaian'])->name('getJenisKunjunganByCapaian');
+    Route::get('getCapaianByAktivitas/', [ReservasiController::class, 'getCapaianByAktivitas'])->name('getCapaianByAktivitas');
+    Route::get('getJenisKunjunganByCapaian/{id}', [ReservasiController::class, 'getJenisKunjunganByCapaian'])->name('getJenisKunjunganByCapaian');
+    Route::get('getTefaByJenisKunjungan', [ReservasiController::class, 'getTefaByJenisKunjungan'])->name('getTefaByJenisKunjungan');
     Route::resource('/reservasi', ReservasiController::class);
 });
 
