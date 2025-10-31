@@ -66,7 +66,9 @@ class ReservasiController extends Controller
                 ->make(true);
         }
 
-        return view('backend.reservasi.index');
+        $dataId = $this->reservasiRepository->getAll()->toArray();
+        // return $dataId;
+        return view('backend.reservasi.index', compact('dataId'));
     }
 
     /**
@@ -220,5 +222,24 @@ class ReservasiController extends Controller
         $id = $request->get('jenis_kunjungan_id');
         $data = $this->reservasiRepository->getTefaByJenisKunjungan($id, $bulan);
         return response()->json($data);
+    }
+
+    public function updateStatus (Request $request,$id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->reservasiRepository->updateStatus($id, $request);
+            DB::commit();
+            alertSuccess('Berhasil mengubah status.');
+            return redirect()->back();
+        } catch (Exception $e) {
+            DB::rollBack();
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
+        } catch (QueryException $e) {
+            DB::rollBack();
+            alertError('Gagal', 'Terjadi kesalahan. ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
 }

@@ -6,6 +6,7 @@
   <body>
     <div id="id">
       @include('layouts.sidebar')
+      @stack('modal')
 
       {{-- <x-flash-messages /> --}}
       

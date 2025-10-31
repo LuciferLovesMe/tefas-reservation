@@ -19,4 +19,6 @@ interface ReservasiInterface
     public function getJenisKunjunganByCapaian($capaianId);
 
     public function getTefaByJenisKunjungan($jenisKunjunganId, $bulan);
+
+    public function updateStatus ($id, $request);
 }

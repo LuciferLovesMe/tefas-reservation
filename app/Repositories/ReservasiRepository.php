@@ -100,4 +100,11 @@ class ReservasiRepository implements ReservasiInterface
 
         return $tefas;
     }
+
+    public function updateStatus($id, $request)
+    {
+        $reservasi = Reservasi::find($id);
+        $reservasi->status = $request->status;
+        return $reservasi->save();
+    }
 }

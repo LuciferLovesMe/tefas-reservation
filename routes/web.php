@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('getJenisKunjunganByCapaian/{id}', [ReservasiController::class, 'getJenisKunjunganByCapaian'])->name('getJenisKunjunganByCapaian');
     Route::get('getTefaByJenisKunjungan', [ReservasiController::class, 'getTefaByJenisKunjungan'])->name('getTefaByJenisKunjungan');
     Route::resource('/reservasi', ReservasiController::class);
+    Route::put('reservasi/update-status/{id}', [ReservasiController::class, 'updateStatus'])->name('reservasi.updateStatus');
 });
 
 
