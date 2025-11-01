@@ -335,7 +335,7 @@
             <!-- Product Section -->
             <div class="mb-5 pb-5">
                 <h2 class="section-title">Produk</h2>
-                <p class="section-subtitle">There are just a few features you'll get using Anima Landing Page UI Kit.</p>
+                <p class="section-subtitle">Produk Unggulan dari Hasil TEFA.</p>
                 <div class="row g-4 justify-content-center">
                     @forelse ($tefa->produkTefa as $key => $product)
                         {{-- Hanya menampilkan 3 produk pertama --}}
@@ -384,13 +384,18 @@
                         </div>
                     @endforeach
                  </div>
+                 <div class="col-12 justify-content-center">
+                     <p class="text-muted text-center">Tidak ada gambar tersedia.</p>
+                 </div>
+                 @if (count($tefa->kegiatanTefa) > 0)
                  <a href="{{ route('landing.galeri', $tefa->id) }}" class="gallery-link">Detail →</a>
+                 @endif
             </div>
 
             {{-- Kegiatan --}}
             <div class="mt-5 pb-5">
                 <h2 class="section-title">Fasilitas</h2>
-                <p class="section-subtitle">There are just a few features you'll get using Anima Landing Page UI Kit.</p>
+                <p class="section-subtitle">Fasilitas yang Tersedia.</p>
                 <div class="row g-4 justify-content-center">
                     @forelse ($tefa->fasilitasTefa as $key => $fasilitas)
                         {{-- Hanya menampilkan 3 produk pertama --}}
@@ -420,7 +425,7 @@
                     <div class="col-lg-7">
                         <h2 class="section-title">Segera kunjungi TEFA!</h2>
                         <p class="">Tingkatkan Keterampilan, Asah Kemampuan, dan Menjadi Percaya Diri dengan Pengalaman Nyata.</p>
-                        <a href="#" class="btn btn-primary">Hubungi Kami</a>
+                        <a href="{{ route('reservasi.index') }}" class="btn btn-primary">Hubungi Kami</a>
                     </div>
                     <div class="col-lg-5 text-center mt-4 mt-lg-0">
                          <img src="{{ asset('/assets/images/undraw_adventure-map_3e4p.png') }}" alt="Adventure Map" class="img-fluid" style="max-width: 250px;">
