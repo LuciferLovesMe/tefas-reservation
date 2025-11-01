@@ -20,7 +20,6 @@
                 <x-sidebar-item icon="bi bi-bullseye" title="Capaian Pembelajaran" link="{{ route('capaian-pembelajaran.index') }}" :isActive="request()->routeIs(['capaian-pembelajaran.index', 'capaian-pembelajaran.create', 'capaian-pembelajaran.edit'])" />
                 <x-sidebar-item icon="bi bi-tags-fill" title="Jenis Kunjungan" link="{{ route('jenis-kunjungan.index') }}" :isActive="request()->routeIs(['jenis-kunjungan.index', 'jenis-kunjungan.create', 'jenis-kunjungan.edit'])" />
                 <x-sidebar-item icon="bi bi-tools" title="Teaching Factory" link="{{ route('tefa.index') }}" :isActive="request()->routeIs(['tefa.index', 'tefa.create', 'tefa.edit'])" />
-                <x-sidebar-item icon="bi bi-gear-fill" title="Aturan Rekomendasi" link="{{ route('rule.index') }}" :isActive="request()->routeIs(['rule.index', 'rule.create', 'rule.edit'])" />
                 {{-- <x-sidebar-item icon="bi bi-door-open-fill" title="Ruangan" link="{{ route('ruangan.index') }}" :isActive="request()->routeIs(['ruangan.index', 'ruangan.create', 'ruangan.edit'])" /> --}}
                 @endif
                 <li class="sidebar-title">Reservasi</li>
