@@ -44,26 +44,6 @@
             }
         }
 
-        function deleteRow (data) {
-          console.log('test');
-          
-          Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-          }).then((result) => {
-              if (result.isConfirmed) {
-                $(`#${data}`).submit()
-            }
-          });
-          
-        }
-
-      
         // Inisialisasi Tom Select pada elemen <select>
         const tomSelectInstance = new TomSelect('#multipleSelect',{
             plugins: ['remove_button'], // Menambahkan tombol 'x' untuk menghapus pilihan

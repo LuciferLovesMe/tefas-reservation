@@ -8,10 +8,14 @@
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{{ $edit }}">Edit</a></li>
             <li>
+                <button class="dropdown-item text-danger btnDelete ..." 
+                        type="button" 
+                        onclick="deleteRow('form-delete-{{ $id }}')">
+                    Hapus
+                </button>
                 <form action="{{ $destroy }}" id="form-delete-{{ $id }}" method="post" enctype="multipart/form-data">
                 @csrf
                     @method('delete')
-                    <button class="dropdown-item text-danger btnDelete delete-button" data-id="{{ $id }}" data-form-delete="form-delete-{{ $id }}" type="button" onclick="deleteRow('form-delete-{{ $id }}')">Hapus</button>
                 </form>
             </li>
         </ul>

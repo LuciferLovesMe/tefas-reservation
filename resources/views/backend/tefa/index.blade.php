@@ -28,6 +28,33 @@
 
 @push('scripts')
     <script>
+        window.deleteRow = function(formId) {
+            // Dapatkan form-nya menggunakan ID yang dikirim
+            const form = $('#' + formId);
+        
+            // Pastikan form ditemukan
+            if (form.length === 0) {
+                console.error('Error: Tidak dapat menemukan form dengan ID: ' + formId);
+                return;
+            }
+        
+            Swal.fire({
+                title: 'Apakah Anda yakin?', // Ganti ke Bahasa Indonesia
+                text: "Data yang dihapus tidak dapat dikembalikan!", // Ganti ke Bahasa Indonesia
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!', // Ganti ke Bahasa Indonesia
+                cancelButtonText: 'Batal' // Ganti ke Bahasa Indonesia
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
+        
+
         $(document).ready(() => {
             const table = $("#tableData").DataTable({
                 processing: true,
@@ -44,11 +71,27 @@
                     { data: 'waktu_panen', name: 'waktu_panen' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
+                "drawCallback": function( settings ) {
+                    console.log('DataTables drawCallback triggered!'); // DEBUG 1
+        
+                    // 1. INSIALISASI ULANG DROPDOWN BOOTSTRAP
+                    var dropdownTriggerList = [].slice.call(
+                        this.api().table().body().querySelectorAll('[data-bs-toggle="dropdown"]')
+                    );
+                    
+                    console.log('Found ' + dropdownTriggerList.length + ' dropdowns to initialize.'); // DEBUG 2
+        
+                    dropdownTriggerList.map(function (dropdownTriggerEl) {
+                        var instance = bootstrap.Dropdown.getInstance(dropdownTriggerEl);
+                        if (!instance) {
+                            // Buat instance Dropdown baru
+                            new bootstrap.Dropdown(dropdownTriggerEl);
+                        }
+                        return dropdownTriggerEl;
+                    });
+                }
+            
             });
-
-            $("#tableData").on('click', '.btnDelete', (e) => {
-                console.log($(this).data('id'));
-            })
         })
     </script>
 @endpush
