@@ -9,7 +9,7 @@ class JenisKunjunganRepository implements JenisKunjunganInterface
 {
     public function getAll()
     {
-        return JenisKunjungan::orderBy('id', 'DESC')->get();
+        return JenisKunjungan::with('capaianPembelajarans')->orderBy('id', 'DESC')->get();
     }
 
     public function getByID($id)
@@ -21,6 +21,7 @@ class JenisKunjunganRepository implements JenisKunjunganInterface
     {
         return JenisKunjungan::create([
             'nama' => $data->nama,
+            'capaian_pembelajaran_id' => $data->capaian_pembelajaran_id
         ]);
     }
 
@@ -28,7 +29,8 @@ class JenisKunjunganRepository implements JenisKunjunganInterface
     {
         $jenisKunjungan = JenisKunjungan::findOrFail($id);
         $jenisKunjungan->update([
-            'nama' => $data->nama
+            'nama' => $data->nama,
+            'capaian_pembelajaran_id' => $data->capaian_pembelajaran_id
         ]);
         return $jenisKunjungan;
     }

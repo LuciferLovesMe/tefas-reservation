@@ -37,6 +37,7 @@
                 ajax: "{{ route('jenis-kunjungan.index') }}",
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                    { data: 'capaian_pembelajaran', name: 'capaian_pembelajaran' },
                     { data: 'nama', name: 'nama' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],

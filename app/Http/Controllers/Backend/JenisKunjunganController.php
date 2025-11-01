@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JenisKunjunganRequest;
+use App\Repositories\CapaianPembelajaranRepository;
 use App\Repositories\JenisKunjunganRepository;
 use App\View\Components\ActionButton;
 use Exception;
@@ -13,11 +14,12 @@ use Illuminate\Support\Facades\DB;
 
 class JenisKunjunganController extends Controller
 {
-    private $jenisKunjunganRepository;
+    private $jenisKunjunganRepository, $capaianPembelajaranRepository;
 
-    public function __construct(JenisKunjunganRepository $jenisKunjunganRepository)
+    public function __construct(JenisKunjunganRepository $jenisKunjunganRepository, CapaianPembelajaranRepository $capaianPembelajaranRepository)
     {
         $this->jenisKunjunganRepository = $jenisKunjunganRepository;
+        $this->capaianPembelajaranRepository = $capaianPembelajaranRepository;
     }
 
     /**
@@ -29,6 +31,9 @@ class JenisKunjunganController extends Controller
             $data = $this->jenisKunjunganRepository->getAll();
             return datatables()->of($data)
                 ->addIndexColumn()
+                ->addColumn('capaian_pembelajaran', function ($data) {
+                    return $data->capaianPembelajarans ? $data->capaianPembelajarans->nama : '-';
+                })
                 ->addColumn('action', function ($data) {
                     $actionButton = new ActionButton(
                         route('jenis-kunjungan.edit', $data->id),
@@ -48,7 +53,8 @@ class JenisKunjunganController extends Controller
      */
     public function create()
     {
-        return view('backend.jenis_kunjungan.create');
+        $capaianPembelajaran = $this->capaianPembelajaranRepository->getAll()->pluck('nama', 'id')->toArray();
+        return view('backend.jenis_kunjungan.create', compact('capaianPembelajaran'));
     }
 
     /**
@@ -91,7 +97,8 @@ class JenisKunjunganController extends Controller
             alertError('Data tidak ditemukan.');
             return redirect()->route('jenis-kunjungan.index');
         }
-        return view('backend.jenis_kunjungan.edit', compact('data'));
+        $capaianPembelajaran = $this->capaianPembelajaranRepository->getAll()->pluck('nama', 'id')->toArray();
+        return view('backend.jenis_kunjungan.edit', compact('data', 'capaianPembelajaran'));
     }
 
     /**

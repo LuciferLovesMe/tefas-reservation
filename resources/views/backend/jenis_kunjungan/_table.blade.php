@@ -3,6 +3,7 @@
     <thead>
       <tr>
         <th class="text-uppercase fw-bold">No.</th>
+        <th class="text-uppercase fw-bold">Capaian Pembelajaran</th>
         <th class="text-uppercase fw-bold">Jenis Kunjungan</th>
         <th class="text-uppercase fw-bold">Aksi</th>
       </tr>

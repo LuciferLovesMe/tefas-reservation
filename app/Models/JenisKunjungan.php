@@ -13,6 +13,7 @@ class JenisKunjungan extends Model
 
     protected $fillable = [
         'nama',
+        'capaian_pembelajaran_id'
     ];
 
     public function tefas()
