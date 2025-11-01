@@ -9,19 +9,19 @@ class CapaianPembelajaranRepository implements CapaianPembelajaranInterface
 {
     public function getAll()
     {
-        return CapaianPembelajaran::orderBy('created_at', 'desc')->get();
+        return CapaianPembelajaran::with('aktivitas')->orderBy('created_at', 'desc')->get();
     }
 
     public function getById($id)
     {
-        return CapaianPembelajaran::findOrFail($id);
+        return CapaianPembelajaran::with('aktivitas')->findOrFail($id);
     }
 
     public function store($data)
     {
         return CapaianPembelajaran::create([
             'nama' => $data->nama,
-            'jenjang' => $data->jenjang,
+            'jenjang' => $data->jenjang_id,
             'aktivitas_id' => $data->aktivitas_id,
         ]);
     }
@@ -31,7 +31,7 @@ class CapaianPembelajaranRepository implements CapaianPembelajaranInterface
         $capaian = CapaianPembelajaran::findOrFail($id);
         $capaian->update([
             'nama' => $data->nama,
-            'jenjang' => $data->jenjang,
+            'jenjang' => $data->jenjang_id,
             'aktivitas_id' => $data->aktivitas_id,
         ]);
         return $capaian;

@@ -6,7 +6,8 @@
             @csrf
             <div class="row">
                 <div class="col-md-12">
-                    <x-form-components.input-text name="jenjang" id="jenjang"/>
+                    <x-form-components.select name="aktivitas" id="aktivitas" :options="$aktivitasPembelajaran"/>
+                    <x-form-components.select name="jenjang" id="jenjang" :options="array_combine($jenjang, $jenjang)"/>
                     <x-form-components.input-text name="nama" id="nama"/>
                 </div>
             </div>

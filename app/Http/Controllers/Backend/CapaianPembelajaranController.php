@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CapaianPembelajaranRequest;
+use App\Interfaces\AktivitasInterface;
 use App\Interfaces\CapaianPembelajaranInterface;
 use App\View\Components\ActionButton;
 use Exception;
@@ -13,11 +14,13 @@ use Illuminate\Support\Facades\DB;
 
 class CapaianPembelajaranController extends Controller
 {
-    private $capaianPembelajaranRepository;
+    private $capaianPembelajaranRepository, $aktivitasRepository;
+    private $jenjang = ['TK', 'SD', 'SMP', 'SMA'];
 
-    public function __construct(CapaianPembelajaranInterface $capaianPembelajaranRepository)
+    public function __construct(CapaianPembelajaranInterface $capaianPembelajaranRepository, AktivitasInterface $aktivitasRepository)
     {
         $this->capaianPembelajaranRepository = $capaianPembelajaranRepository;
+        $this->aktivitasRepository = $aktivitasRepository;
     }
 
     /**
@@ -30,6 +33,9 @@ class CapaianPembelajaranController extends Controller
             return datatables()
                 ->of($data)
                 ->addIndexColumn()
+                ->addColumn('nama_aktivitas', function ($data) {
+                    return $data->aktivitas ? $data->aktivitas->nama : '-';
+                })
                 ->addColumn('action', function ($data) {
                     $button = new ActionButton(
                         route('capaian-pembelajaran.edit', $data->id),
@@ -49,7 +55,9 @@ class CapaianPembelajaranController extends Controller
      */
     public function create()
     {
-        return view('backend.capaian-pembelajaran.create');
+        $aktivitasPembelajaran = $this->aktivitasRepository->getAll()->pluck('nama', 'id')->toArray();
+        $jenjang = $this->jenjang;
+        return view('backend.capaian-pembelajaran.create', compact('aktivitasPembelajaran', 'jenjang'));
     }
 
     /**
@@ -57,6 +65,7 @@ class CapaianPembelajaranController extends Controller
      */
     public function store(CapaianPembelajaranRequest $request)
     {
+        // return convertJenjang($request->jenjang_id);
         DB::beginTransaction();
         try {
             $this->capaianPembelajaranRepository->store($request);
@@ -93,7 +102,9 @@ class CapaianPembelajaranController extends Controller
             return redirect()->back();
         }
 
-        return view('backend.capaian-pembelajaran.edit', compact('data'));
+        $aktivitasPembelajaran = $this->aktivitasRepository->getAll()->pluck('nama', 'id')->toArray();
+        $jenjang = $this->jenjang;
+        return view('backend.capaian-pembelajaran.edit', compact('data', 'aktivitasPembelajaran', 'jenjang'));
     }
 
     /**

@@ -3,6 +3,7 @@
     <thead>
       <tr>
         <th class="text-uppercase fw-bold">No.</th>
+        <th class="text-uppercase fw-bold">Aktivitas</th>
         <th class="text-uppercase fw-bold">Jenjang</th>
         <th class="text-uppercase fw-bold">Nama</th>
         <th class="text-uppercase fw-bold">Aksi</th>

@@ -11,6 +11,7 @@ class CapaianPembelajaran extends Model
     protected $fillable = [
         'nama',
         'aktivitas_id',
+        'jenjang',
     ];
 
     public function rules()

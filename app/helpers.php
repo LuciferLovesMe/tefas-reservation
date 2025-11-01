@@ -76,7 +76,12 @@ if (!function_exists('convertJenjang')) {
             '1' => 'SD',
             '2' => 'SMP',
             '3' => 'SMA',
-            default => 'Semua Jenjang',
+            0 => 'TK',
+            1 => 'SD',
+            2 => 'SMP',
+            3 => 'SMA',
+            // default => null,
+            null => null,
         };
     }
 }
@@ -85,10 +90,10 @@ if (!function_exists('convertJenjangToId')) {
     function convertJenjangToId($value)
     {
         return match ($value) {
-            'TK' => '0',
-            'SD' => '1',
-            'SMP' => '2',
-            'SMA' => '3',
+            'TK' => 0,
+            'SD' => 1,
+            'SMP' => 2,
+            'SMA' => 3,
             default => null,
         };
     }

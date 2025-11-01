@@ -26,6 +26,34 @@
                 width: '100%'
             });
         } );
+
+        
+        window.deleteRow = function(formId) {
+            // Dapatkan form-nya menggunakan ID yang dikirim
+            const form = $('#' + formId);
+        
+            // Pastikan form ditemukan
+            if (form.length === 0) {
+                console.error('Error: Tidak dapat menemukan form dengan ID: ' + formId);
+                return;
+            }
+        
+            Swal.fire({
+                title: 'Apakah Anda yakin?', // Ganti ke Bahasa Indonesia
+                text: "Data yang dihapus tidak dapat dikembalikan!", // Ganti ke Bahasa Indonesia
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!', // Ganti ke Bahasa Indonesia
+                cancelButtonText: 'Batal' // Ganti ke Bahasa Indonesia
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
+        
         
         function inpNumber (element) {
             let input = document.getElementById(element)
