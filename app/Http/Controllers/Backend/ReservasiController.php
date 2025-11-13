@@ -205,7 +205,7 @@ class ReservasiController extends Controller
     public function getCapaianByAktivitas(Request $request)
     {
         $aktivitasId = $request->query('aktivitas_id');
-        $jenjang = $request->query('jenjang');
+        $jenjang = auth()->user()->tipe_sekolah;
         $capaianPembelajaran = $this->reservasiRepository->getCapaianByAktivitas($aktivitasId, $jenjang);
         return response()->json($capaianPembelajaran);
     }

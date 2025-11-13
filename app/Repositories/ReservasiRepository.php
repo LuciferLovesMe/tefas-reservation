@@ -12,8 +12,12 @@ class ReservasiRepository implements ReservasiInterface
 {
     public function getAll()
     {
+        $userRole = auth()->user()->role;
         return Reservasi::with('tefa')
             ->with('customer')
+            ->when($userRole === 'customer', function ($query) {
+                $query->where('customer_id', auth()->user()->id);
+            })
             ->orderBy('created_at', 'DESC')
             ->get();
     }

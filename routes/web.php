@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\ReservasiController;
 use App\Http\Controllers\Backend\TefaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\RuleController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -14,11 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LandingController::class, 'index'])->name('landing.index');
 Route::get('/detail/{id}', [LandingController::class, 'show'])->name('landing.show');
 Route::get('detail/{id}/galeri', [LandingController::class, 'galeri'])->name('landing.galeri');
-
-Route::get('/dashboard', function () {
-    return view('layouts.layout');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

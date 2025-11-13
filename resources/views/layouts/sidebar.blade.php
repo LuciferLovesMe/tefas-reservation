@@ -5,7 +5,7 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Dashboard</li>
-                <x-sidebar-item icon="bi bi-grid-fill" title="Dashboard" link="{{ route('dashboard') }}" :isActive="request()->routeIs('dashboard')" />
+                <x-sidebar-item icon="bi bi-grid-fill" title="Dashboard" link="{{ route('dashboard.index') }}" :isActive="request()->routeIs('dashboard.index')" />
                 @if (auth()->user()->role === 'admin')
                 <li class="sidebar-title">Master Data</li>
                 <x-sidebar-item icon="bi bi-list-task" title="Aktivitas" link="{{ route('aktivitas.index') }}" :isActive="request()->routeIs(['aktivitas.index', 'aktivitas.create', 'jenis-kunjungan.edit'])" />
