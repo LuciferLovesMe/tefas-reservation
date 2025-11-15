@@ -9,6 +9,10 @@
             background-color: #f8f9fa;
         }
 
+        html {
+           scroll-behavior: smooth;
+        }
+
         /* Custom Colors */
         :root {
             --brand-teal: #0d9488;
@@ -242,7 +246,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ url('/') }}">
                 <i class="bi bi-buildings-fill text-primary"></i> TEFA
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -251,13 +255,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
+                        <a class="nav-link" href="#hero">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#why-tefa">How it works</a>
+                        <a class="nav-link" href="#why-tefa">Alasan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Tefa</a>
                     </li>
                     <li class="nav-item ms-lg-3">
-                        <a class="btn btn-primary" href="#">Get Started</a>
+                        <a class="btn btn-primary" href="{{ route('login') }}">Login</a>
                     </li>
                 </ul>
             </div>
@@ -389,6 +396,9 @@
                 @forelse ($tefaData as $key => $tefa)
                 <div class="col-lg-4 col-md-6">
                     <div class="card">
+                        @if (count($tefa->kegiatanTefa) > 0)
+                            <img src="{{ asset('uploads/tefa/kegiatan/' . $tefa->id . '/' . $tefa->kegiatanTefa[0]->detail) }}" alt="">
+                        @endif
                         <div class="card-body text-start">
                             <h5 class="card-title mb-3">{{ $tefa->nama }}</h5>
                             <p class="card-text">{{ $tefa->deskripsi }}</p>

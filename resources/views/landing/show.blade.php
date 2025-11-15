@@ -289,7 +289,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ url('/') }}">
                 <i class="bi bi-buildings-fill text-primary"></i> TEFA
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -298,13 +298,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
+                        <a class="nav-link" href="#hero">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#why-tefa">How it works</a>
+                        <a class="nav-link" href="#why-tefa">Alasan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Tefa</a>
                     </li>
                     <li class="nav-item ms-lg-3">
-                        <a class="btn btn-primary" href="#">Get Started</a>
+                        <a class="btn btn-primary" href="{{ route('login') }}">Login</a>
                     </li>
                 </ul>
             </div>
@@ -384,11 +387,12 @@
                         </div>
                     @endforeach
                  </div>
+                 @if (count($tefa->kegiatanTefa) > 0)
+                 <a href="{{ route('landing.galeri', $tefa->id) }}" class="gallery-link">Detail →</a>
+                 @else
                  <div class="col-12 justify-content-center">
                      <p class="text-muted text-center">Tidak ada gambar tersedia.</p>
                  </div>
-                 @if (count($tefa->kegiatanTefa) > 0)
-                 <a href="{{ route('landing.galeri', $tefa->id) }}" class="gallery-link">Detail →</a>
                  @endif
             </div>
 

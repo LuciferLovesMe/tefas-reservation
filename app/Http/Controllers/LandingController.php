@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\TefaInterface;
+use App\Models\Tefa;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
@@ -18,7 +19,7 @@ class LandingController extends Controller
      */
     public function index()
     {
-        $tefaData = $this->tefaRepository->getAll();
+        $tefaData = Tefa::with('kegiatanTefa')->orderBy('id', 'desc')->get();
         return view('landing.index', compact('tefaData'));
     }
 
