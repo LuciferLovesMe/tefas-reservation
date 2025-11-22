@@ -7,8 +7,8 @@
         <x-default-card :isForm="true" :title="['Reservasi', 'Tambah']">
             <div class="row">
                 <div class="col">
-                    <x-form-components.input-datetime name="jadwal_mulai" id="jadwal_mulai" :value="$data->jadwal_mulai" />
-                    <x-form-components.input-datetime name="jadwal_berakhir" id="jadwal_berakhir" :value="$data->jadwal_berakhir" />
+                    <x-form-components.input-date-time name="jadwal_mulai" id="jadwal_mulai" :value="$data->jadwal_mulai" />
+                    <x-form-components.input-date-time name="jadwal_berakhir" id="jadwal_berakhir" :value="$data->jadwal_berakhir" />
                     <x-form-components.input-number name="jumlah_peserta" id="jumlah_peserta" :value="$data->jumlah_peserta" />
                     <x-form-components.select name="aktivitas" id="aktivitas" :options="$aktivitas"  :value="$saved_aktivitas_id ?? null"/>
                     
