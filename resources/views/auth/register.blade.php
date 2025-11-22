@@ -69,6 +69,15 @@
                         </div> --}}
                         <h1 class="auth-title">Register</h1>
                         <p class="auth-subtitle mb-5">Masukkan data anda untuk mendaftar di website kami.</p>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
