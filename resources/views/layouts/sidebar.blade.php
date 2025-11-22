@@ -8,7 +8,7 @@
                 <x-sidebar-item icon="bi bi-grid-fill" title="Dashboard" link="{{ route('dashboard.index') }}" :isActive="request()->routeIs('dashboard.index')" />
                 @if (auth()->user()->role === 'admin')
                 <li class="sidebar-title">Master Data</li>
-                <x-sidebar-item icon="bi bi-list-task" title="Aktivitas" link="{{ route('aktivitas.index') }}" :isActive="request()->routeIs(['aktivitas.index', 'aktivitas.create', 'jenis-kunjungan.edit'])" />
+                <x-sidebar-item icon="bi bi-list-task" title="Aktivitas" link="{{ route('aktivitas.index') }}" :isActive="request()->routeIs(['aktivitas.index', 'aktivitas.create', 'aktivitas.edit'])" />
                 <x-sidebar-item icon="bi bi-bullseye" title="Capaian Pembelajaran" link="{{ route('capaian-pembelajaran.index') }}" :isActive="request()->routeIs(['capaian-pembelajaran.index', 'capaian-pembelajaran.create', 'capaian-pembelajaran.edit'])" />
                 <x-sidebar-item icon="bi bi-tags-fill" title="Jenis Kunjungan" link="{{ route('jenis-kunjungan.index') }}" :isActive="request()->routeIs(['jenis-kunjungan.index', 'jenis-kunjungan.create', 'jenis-kunjungan.edit'])" />
                 <x-sidebar-item icon="bi bi-tools" title="Teaching Factory" link="{{ route('tefa.index') }}" :isActive="request()->routeIs(['tefa.index', 'tefa.create', 'tefa.edit'])" />
